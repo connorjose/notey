@@ -1,8 +1,9 @@
-import { useState } from "react";
+// import { useState } from "react";
 import Textarea from './TextArea';
 import HeadArea from "./HeadingArea";
+import { INote } from "../models/INote";
 
-function NoteArea({note}) {
+function NoteArea({note}: {note: INote}) {
     return (
         <div className="notearea-container">
             <HeadArea title={note.title}/>

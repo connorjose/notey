@@ -1,8 +1,9 @@
 import { useState } from "react";
 import NotePanel from "./NotePanel";
 import NoteArea from "./NoteArea";
+import { INote } from "../models/INote";
 
-function NoteApp({notes}) {
+function NoteApp({notes}: {notes: INote[]}) {
     const [selectedNote] = useState(0);
     return (
         <div className="flex flex-row">
@@ -13,7 +14,7 @@ function NoteApp({notes}) {
 
 }
 
-function getSelectedNote(notes, selectedNote) {
+function getSelectedNote(notes: INote[], selectedNote: number) {
     return notes[selectedNote];
 }
 

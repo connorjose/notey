@@ -1,8 +1,6 @@
-import { useState } from "react";
+// import { useState } from "react";
 
 function SearchBox() {
-
-    
     return (
         <div className="search-container">
             <label>Search: </label>

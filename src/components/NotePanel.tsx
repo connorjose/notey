@@ -1,8 +1,9 @@
-import { useState } from "react";
+// import { useState } from "react";
 import SearchBox from "./SearchBox";
 import NoteList from "./NoteList";
+import { INote } from "../models/INote";
 
-function NotePanel({notes, selectedNote}) {
+function NotePanel({notes, selectedNote}: {notes: INote[], selectedNote: number}) {
     
     // List of notes
     // Searchable and reoderable

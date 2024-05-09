@@ -1,6 +1,6 @@
 // import { useState } from "react";
 
-function TextArea({content}) {
+function TextArea({content}: {content: string}) {
 
     // Main text area
     // Track text changes using state

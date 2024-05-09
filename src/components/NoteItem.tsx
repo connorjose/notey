@@ -1,6 +1,7 @@
-import { useState } from "react";
+// import { useState } from "react";
+import { INote } from "../models/INote";
 
-function NoteItem({note}) {
+function NoteItem({note}: {note: INote}) {
 
     // update to be a material like card
     return (

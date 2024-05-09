@@ -1,11 +1,15 @@
 import NoteItem from "./NoteItem";
+import { INote } from "../models/INote";
 
-function NoteList({notes, selectedNote}) {
+function NoteList({notes, selectedNote}: {notes: INote[], selectedNote: number}) {
 
-    const rows: any = [];
-    function getSelectedNote(notes, selectedNote) {
+    selectedNote = 1;
+    const rows: React.JSX.Element[] = [];
+    function getSelectedNote(notes: INote[], selectedNote: number) {
         return notes[selectedNote];
     }
+
+    getSelectedNote(notes, selectedNote);
 
     notes.forEach(note => {
         rows.push(
