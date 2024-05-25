@@ -18,7 +18,7 @@ function NoteList({notes, selectedNote}: {notes: INote[], selectedNote: number})
     });
 
     return (
-        <div className="note-list">
+        <div className="note-list mt-5">
             <ul>
                 {rows}
             </ul>

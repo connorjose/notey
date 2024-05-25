@@ -1,5 +1,5 @@
 import './App.css';
-import NOTES from './data/noteData.js';
+import NOTES from './data/noteData.ts';
 import NoteApp from './components/NoteApp';
 
 function App() {

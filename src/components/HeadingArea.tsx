@@ -3,7 +3,7 @@
 function HeadArea({title}: {title: string}) {
 
     return (
-        <textarea className="heading-text" defaultValue={title}></textarea>
+        <textarea className="heading-text resize-none text-3xl" defaultValue={title}></textarea>
     );
 
     // Heading of note area

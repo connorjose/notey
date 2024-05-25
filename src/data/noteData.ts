@@ -1,4 +1,5 @@
-const NOTES =  
+import { INote } from "../models/INote"
+const NOTES: INote[] =  
     [
         {
             id: 1,
