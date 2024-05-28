@@ -6,7 +6,7 @@ import { INote } from "../models/INote";
 function NoteApp({notes}: {notes: INote[]}) {
     const [selectedNote] = useState(0);
     return (
-        <div className="flex flex-row w-full h-full align-top">
+        <div className="flex flex-row w-full h-screen align-top">
             <NotePanel notes={notes} selectedNote={selectedNote}/>
             <NoteArea note={getSelectedNote(notes, selectedNote)}/>
         </div>

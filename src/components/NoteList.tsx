@@ -1,19 +1,23 @@
 import NoteItem from "./NoteItem";
 import { INote } from "../models/INote";
+import { useCallback } from "react";
 
 function NoteList({notes, selectedNote}: {notes: INote[], selectedNote: number}) {
 
-    selectedNote = 1;
     const rows: React.JSX.Element[] = [];
     function getSelectedNote(notes: INote[], selectedNote: number) {
         return notes[selectedNote];
     }
 
+    const updateSelectedNote = useCallback((noteId: number) => {
+        selectedNote = noteId;
+    }, [selectedNote]);
+
     getSelectedNote(notes, selectedNote);
 
     notes.forEach(note => {
         rows.push(
-            <NoteItem note={note} key={note.id} />
+            <NoteItem note={note} key={note.id} onClick={updateSelectedNote(note.id)} />
         );
     });
 
