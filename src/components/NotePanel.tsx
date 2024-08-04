@@ -3,7 +3,7 @@ import SearchBox from "./SearchBox";
 import NoteList from "./NoteList";
 import { INote } from "../models/INote";
 
-function NotePanel({notes, selectedNote}: {notes: INote[], selectedNote: number}) {
+function NotePanel({notes, selectedNote, handleNoteChange}: {notes: INote[], selectedNote: number, handleNoteChange: any}) {
     
     // List of notes
     // Searchable and reoderable
@@ -12,7 +12,7 @@ function NotePanel({notes, selectedNote}: {notes: INote[], selectedNote: number}
     return (
         <div className="">
             <SearchBox />
-            <NoteList notes={notes} selectedNote={selectedNote} />
+            <NoteList notes={notes} selectedNote={selectedNote} handleNoteChange={handleNoteChange} />
         </div>
     )
 }
