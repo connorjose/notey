@@ -1,19 +1,18 @@
 import NoteItem from "./NoteItem";
 import { INote } from "../models/INote";
 
-function NoteList({notes, selectedNote, handleNoteChange}: {notes: INote[], selectedNote: number, handleNoteChange: any}) {
+function NoteList({notes, selectedNote, onNoteSelect}: {notes: INote[], selectedNote: number, onNoteSelect: any}) {
 
     const rows: React.JSX.Element[] = [];
-    
-    function getSelectedNote(notes: INote[], selectedNote: number) {
-        return notes[selectedNote];
-    }
 
-    getSelectedNote(notes, selectedNote);
+    function handleSelect(noteId:number)
+    {
+        onNoteSelect(noteId);
+    }
 
     notes.forEach(note => {
         rows.push(
-            <NoteItem note={note} key={note.id} onClick={handleNoteChange} />
+            <NoteItem note={note} key={note.id} onNoteClick={() => {handleSelect(note.id)}} />
         );
     });
 
