@@ -9,7 +9,7 @@ function App() {
   // This could be intalised here or in a service? Probably service
 
   return (
-    <NoteApp notes={NOTES} />
+    <NoteApp userNotes={NOTES} />
   );
   
 }

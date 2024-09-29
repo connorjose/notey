@@ -3,17 +3,26 @@ import NotePanel from "./NotePanel";
 import NoteArea from "./NoteArea";
 import { INote } from "../models/INote";
 
-function NoteApp({notes}: {notes: INote[]}) {
+function NoteApp({userNotes}: {userNotes: INote[]}) {
+    const [notes, setNotes] = useState(userNotes);
     const [selectedNote, setSelecteNote] = useState(0);
 
-    function handleNoteChange(noteId:number) {
+    const handleNoteChange = (noteId:number) => {
         setSelecteNote(noteId);
+    }
+
+    const handleNoteUpdate = (updatedNote: INote) => {
+        setNotes((prevNotes) => 
+            prevNotes.map((note, idx) => 
+                idx === selectedNote ? updatedNote : note
+            )
+        );
     }
 
     return (
         <div className="flex flex-row w-full h-screen align-top">
             <NotePanel notes={notes} selectedNote={selectedNote} onNoteSelect={handleNoteChange}/>
-            <NoteArea note={notes.find(n => n.id == selectedNote) ?? notes[0]}/>
+            <NoteArea note={notes[selectedNote]} onNoteUpdate={handleNoteUpdate}/>
         </div>
     );
 
