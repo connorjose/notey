@@ -13,7 +13,7 @@ function NoteItem({
     // update to be a material like card
     // TODO: pass in selected not idx for conditional styling
     const selected = selectedNote === note.id
-    const selectedStyle = "block max-w-sm m-2 p-2.5 bg-white border border-gray-200 rounded-lg shadow bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+    const selectedStyle = "block max-w-sm m-2 p-2.5 bg-white border border-gray-200 rounded-lg shadow bg-gray-100 dark:bg-gray-700 dark:border-gray-700"
     const notSelectedStyle = "block max-w-sm m-2 p-2.5 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
 
     return (
