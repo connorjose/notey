@@ -10,6 +10,16 @@ const NOTES: INote[] =
             id: 1,
             title: "Okey Dokey",
             content: "Cras at justo sem. Cras eget nibh at sapien faucibus lobortis ut vel dolor. Suspendisse laoreet lacus vestibulum massa lacinia condimentum. Praesent sit amet ipsum in ante aliquam elementum a ut ex. Etiam lectus neque, imperdiet sagittis ex tristique, scelerisque euismod dui. Nullam vitae ornare felis, eu lobortis dui. Proin euismod mollis pharetra. Quisque rutrum ullamcorper metus, ac dignissim ante molestie id. Sed id ipsum eget eros lobortis rutrum. In sodales erat erat, placerat aliquet eros malesuada sit amet. In tempus nulla sit amet consectetur mattis. Phasellus aliquam dolor purus, eu venenatis dui mollis nec. Aliquam erat volutpat. Integer justo sem, imperdiet eget rhoncus in, varius quis enim. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. "
+        },
+        {
+            id: 2,
+            title: "Fish",
+            content: "Hide yo daughters, hide yo grandmama"
+        },
+        {
+            id: 3,
+            title: "Bendover",
+            content: "eye eye cappin"
         }
     ]
 

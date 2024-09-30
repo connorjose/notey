@@ -13,7 +13,7 @@ function NotePanel({
     onNoteSelect: (noteId: number) => void }) {
     return (
         <div className="">
-            <SearchBox />
+            <SearchBox notes={notes} />
             <NoteList notes={notes} selectedNote={selectedNote} onNoteSelect={onNoteSelect} />
         </div>
     )
