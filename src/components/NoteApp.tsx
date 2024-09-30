@@ -21,7 +21,7 @@ function NoteApp({userNotes}: {userNotes: INote[]}) {
 
     return (
         <div className="flex flex-row w-full h-screen align-top">
-            <NotePanel notes={notes} selectedNote={selectedNote} onNoteSelect={handleNoteChange}/>
+            <NotePanel notes={notes} selectedNote={selectedNote} onNoteSelect={handleNoteChange} />
             <NoteArea note={notes[selectedNote]} onNoteUpdate={handleNoteUpdate}/>
         </div>
     );
