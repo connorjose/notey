@@ -2,6 +2,7 @@ import { useState } from "react";
 import NotePanel from "./NotePanel";
 import NoteArea from "./NoteArea";
 import { INote } from "../models/INote";
+import { Center, Container, Flex } from "@mantine/core";
 
 function NoteApp({userNotes}: {userNotes: INote[]}) {
     const [notes, setNotes] = useState(userNotes);
@@ -19,11 +20,18 @@ function NoteApp({userNotes}: {userNotes: INote[]}) {
         );
     }
 
+    // const demoProps = {
+    //     bg: 'var(--mantine-color-blue-light)',
+    //     mt: 'md',
+    // };
+
     return (
-        <div>
-            <NotePanel notes={notes} selectedNote={selectedNote} onNoteSelect={handleNoteChange} />
-            <NoteArea note={notes[selectedNote]} onNoteUpdate={handleNoteUpdate}/>
-        </div>
+        <Container fluid>
+            <Flex gap="lg" direction="row" justify={Center} align={Center}>
+                <NotePanel notes={notes} selectedNote={selectedNote} onNoteSelect={handleNoteChange} />
+                <NoteArea note={notes[selectedNote]} onNoteUpdate={handleNoteUpdate}/>
+            </Flex>
+        </Container>  
     );
 
 }

@@ -16,7 +16,6 @@ function TextArea({
     }, [content]);
 
     const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        // console.log('target', e.target);
         setText(e.target.value);
         onContentChange(e.target.value);
     }

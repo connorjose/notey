@@ -1,4 +1,5 @@
 import { INote } from "../models/INote";
+import { NavLink } from "@mantine/core";
 
 function NoteItem({
     note, 
@@ -18,11 +19,14 @@ function NoteItem({
     // const notSelectedStyle = "block max-w-sm m-2 p-2.5 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
 
     return (
-        <a key={note.id} onClick={onNoteClick} 
-            href="#">
-            <h5>{note.title}</h5>
-            <p>{summary}</p>
-        </a>
+        <NavLink
+            href="#"
+            key={note.id}
+            label={note.title}
+            active={selected}
+            description={summary}
+            onClick={onNoteClick}
+        />
     );
 }
 

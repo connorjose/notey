@@ -1,6 +1,7 @@
 // import { useState } from "react";
 import Textarea from './TextArea';
 import { INote } from "../models/INote";
+import { Flex } from '@mantine/core';
 
 function NoteArea({note, onNoteUpdate}: {note: INote, onNoteUpdate: (updatedNote: INote) => void}) {
 
@@ -13,10 +14,10 @@ function NoteArea({note, onNoteUpdate}: {note: INote, onNoteUpdate: (updatedNote
     }
 
     return (
-        <div>
+        <Flex direction="column">
             <Textarea content={note.title} onContentChange={handleTitleChange}/>
             <Textarea content={note.content} onContentChange={handleContentChange}/>
-        </div>
+        </Flex>
     );
 }
 
