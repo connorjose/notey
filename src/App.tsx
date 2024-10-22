@@ -1,6 +1,10 @@
 import './App.css';
+import '@mantine/core/styles.css'
+import '@mantine/tiptap/styles.css'
+
 import NOTES from './data/noteData.ts';
 import NoteApp from './components/NoteApp';
+import { MantineProvider } from '@mantine/core';
 
 function App() {
   // TODO: Add state logic in components for text and note selection
@@ -9,7 +13,7 @@ function App() {
   // This could be intalised here or in a service? Probably service
 
   return (
-    <NoteApp userNotes={NOTES} />
+    <MantineProvider>{<NoteApp userNotes={NOTES} />}</MantineProvider>
   );
   
 }
