@@ -1,3 +1,5 @@
+import { TextInput } from "@mantine/core";
+
 function SearchBox({
     searchQuery, 
     onSearch
@@ -10,9 +12,11 @@ function SearchBox({
     }
 
     return (
-        <div className="search-container">
-            <input type="text" value={searchQuery} onChange={handleSearchChange} placeholder="Search"/>
-        </div>
+        <TextInput 
+            placeholder="Search notes"
+            value={searchQuery}
+            onChange={handleSearchChange}
+        />
     );
 }
 

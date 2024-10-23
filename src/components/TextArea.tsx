@@ -1,14 +1,20 @@
 import { useState, useEffect } from "react";
+import { Textarea } from "@mantine/core";
 
 function TextArea({
-        content, 
+        content,
+        minRows,
+        maxRows,
+        size,
         onContentChange
     }: {
-        content: string, 
+        content: string,
+        minRows: number,
+        maxRows: number,
+        size: string,
         onContentChange: (newContent: string) => void;
     }) {
     const [text, setText] = useState(content)
-    const autoComplete = "on";
     const placeholder = "Say something!";
 
     useEffect(() => {
@@ -21,7 +27,15 @@ function TextArea({
     }
 
     return (
-        <textarea autoComplete={autoComplete} placeholder={placeholder} value={text} onChange={handleTextChange}></textarea>
+        <Textarea
+            placeholder={placeholder}
+            value={text}
+            onChange={handleTextChange}
+            autosize
+            minRows={minRows}
+            maxRows={maxRows}
+            size={size}
+        />
     );
 
 }

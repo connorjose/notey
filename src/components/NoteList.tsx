@@ -24,11 +24,9 @@ function NoteList({
     });
 
     return (
-        <div className="note-list mt-5">
-            <ul>
-                {rows}
-            </ul>
-        </div>
+        <>
+            {rows}
+        </>
     );
 }
 
