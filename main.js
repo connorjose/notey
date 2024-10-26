@@ -2,8 +2,8 @@ import { app, BrowserWindow } from 'electron'
 
 const createWindow = () => {
     const win = new BrowserWindow({
-        width: 800,
-        height: 900
+        width: 1200,
+        height: 1000
     })
 
     win.loadURL('http://localhost:5173/');

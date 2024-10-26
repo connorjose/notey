@@ -37,7 +37,8 @@ function EditorArea({content,
 
     useEffect(() => {
         setText(content);
-        editor?.commands.setContent(content);
+        if (editor?.getText() !== content)
+            editor?.commands.setContent(content);
     }, [content, editor]);
 
     return (
