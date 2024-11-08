@@ -20,10 +20,7 @@ function NoteApp({userNotes}: {userNotes: INote[]}) {
         );
     }
 
-    // const demoProps = {
-    //     bg: 'var(--mantine-color-blue-light)',
-    //     mt: 'md',
-    // };
+    console.log(window.versions.thing);
 
     return (
         <Container fluid>
