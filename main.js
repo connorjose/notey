@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
+import { NOTES } from './src/data/noteData.ts'
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -16,6 +17,7 @@ const createWindow = () => {
         }
     })
 
+    win.webContents.send('data:notes', NOTES);
     win.loadURL('http://localhost:5173/');
     win.webContents.openDevTools();
 }
