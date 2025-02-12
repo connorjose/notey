@@ -2,7 +2,7 @@ import './App.css';
 import '@mantine/core/styles.css'
 import '@mantine/tiptap/styles.css'
 
-import NOTES from './data/noteData.ts';
+import NOTES from '../data/noteData';
 import NoteApp from './components/NoteApp';
 import { MantineProvider } from '@mantine/core';
 

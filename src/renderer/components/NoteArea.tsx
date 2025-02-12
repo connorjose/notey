@@ -1,6 +1,6 @@
 // import { useState } from "react";
 import TextArea from './TextArea';
-import { INote } from "../models/INote";
+import { INote } from "../../models/INote";
 import EditorArea from './EditorArea';
 import { Flex } from '@mantine/core';
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import NotePanel from "./NotePanel";
 import NoteArea from "./NoteArea";
-import { INote } from "../models/INote";
+import { INote } from "../../models/INote";
 import { Center, Container, Flex } from "@mantine/core";
 
 function NoteApp({userNotes}: {userNotes: INote[]}) {
@@ -19,9 +19,6 @@ function NoteApp({userNotes}: {userNotes: INote[]}) {
             )
         );
     }
-
-    console.log(window.versions.thing);
-
     return (
         <Container fluid>
             <Flex gap="lg" direction="row" justify={Center} align={Center}>

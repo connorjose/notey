@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SearchBox from "./SearchBox";
 import NoteList from "./NoteList";
-import { INote } from "../models/INote";
+import { INote } from "../../models/INote";
 import { Space } from "@mantine/core";
 
 function NotePanel({
