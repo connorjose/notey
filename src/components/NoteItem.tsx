@@ -1,4 +1,4 @@
-import { INote } from "../../models/INote";
+import { INote } from "../models/INote";
 import { NavLink } from "@mantine/core";
 
 function NoteItem({

@@ -1,5 +1,5 @@
 import NoteItem from "./NoteItem";
-import { INote } from "../../models/INote";
+import { INote } from "../models/INote";
 
 function NoteList({
     notes, 
