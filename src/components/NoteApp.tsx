@@ -1,33 +1,28 @@
-import { useState } from "react";
+import { INote } from "../models/INote";
 import NotePanel from "./NotePanel";
 import NoteArea from "./NoteArea";
-import { INote } from "../models/INote";
 import { Center, Container, Flex } from "@mantine/core";
 
-function NoteApp({userNotes}: {userNotes: INote[]}) {
-    const [notes, setNotes] = useState(userNotes);
-    const [selectedNote, setSelecteNote] = useState(0);
+interface NoteAppProps {
+    notes: INote[];
+    selectedNote: number;
+    onNoteSelect: (noteId: number) => void;
+    onNoteUpdate: (updatedNote: INote) => void;
+}
 
-    const handleNoteChange = (noteId:number) => {
-        setSelecteNote(noteId);
-    }
+function NoteApp({ notes, selectedNote, onNoteSelect, onNoteUpdate }: NoteAppProps) {
+    const selectedNoteData = notes[selectedNote];
 
-    const handleNoteUpdate = (updatedNote: INote) => {
-        setNotes((prevNotes) => 
-            prevNotes.map((note, idx) => 
-                idx === selectedNote ? updatedNote : note
-            )
-        );
-    }
     return (
         <Container fluid>
             <Flex gap="lg" direction="row" justify={Center} align={Center}>
-                <NotePanel notes={notes} selectedNote={selectedNote} onNoteSelect={handleNoteChange} />
-                <NoteArea note={notes[selectedNote]} onNoteUpdate={handleNoteUpdate}/>
+                <NotePanel notes={notes} selectedNote={selectedNote} onNoteSelect={onNoteSelect} />
+                {selectedNoteData && (
+                    <NoteArea note={selectedNoteData} onNoteUpdate={onNoteUpdate} />
+                )}
             </Flex>
-        </Container>  
+        </Container>
     );
-
 }
 
 export default NoteApp;
