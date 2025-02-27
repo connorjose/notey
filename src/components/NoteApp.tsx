@@ -10,12 +10,14 @@ interface NoteAppProps {
     onNoteUpdate: (updatedNote: INote) => void;
 }
 
+// TODO: this component is uselsess, remove it
+
 function NoteApp({ notes, selectedNote, onNoteSelect, onNoteUpdate }: NoteAppProps) {
     const selectedNoteData = notes[selectedNote];
 
     return (
         <Container fluid>
-            <Flex gap="lg" direction="row" justify={Center} align={Center}>
+            <Flex gap="xl" direction="row" justify={Center} align={Center}>
                 <NotePanel notes={notes} selectedNote={selectedNote} onNoteSelect={onNoteSelect} />
                 {selectedNoteData && (
                     <NoteArea note={selectedNoteData} onNoteUpdate={onNoteUpdate} />

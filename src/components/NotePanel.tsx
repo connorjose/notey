@@ -2,7 +2,7 @@ import { useState } from "react";
 import SearchBox from "./SearchBox";
 import NoteList from "./NoteList";
 import { INote } from "../models/INote";
-import { Space } from "@mantine/core";
+import { Container, Space } from "@mantine/core";
 
 interface NotePanelProps {
     notes: INote[]
@@ -29,11 +29,11 @@ function NotePanel({
     })
 
     return (
-        <div className="note-panel">
+        <Container fluid>
             <SearchBox searchQuery={searchQuery} onSearch={setSearchQuery} />
             <Space h='sm' />
             <NoteList notes={filteredNotes} selectedNote={selectedNote} onNoteSelect={onNoteSelect} />
-        </div>
+        </Container>
     )
 }
 

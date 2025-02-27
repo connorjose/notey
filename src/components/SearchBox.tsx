@@ -1,4 +1,5 @@
-import { TextInput } from "@mantine/core";
+import { ActionIcon, Flex, TextInput } from "@mantine/core";
+import { IconSquarePlus } from "@tabler/icons-react";
 
 interface SearchBoxProps {
     searchQuery: string,
@@ -15,11 +16,17 @@ function SearchBox({
     }
 
     return (
-        <TextInput 
-            placeholder="Search notes"
-            value={searchQuery}
-            onChange={handleSearchChange}
-        />
+        <Flex align="center" justify="space-between">
+            <TextInput 
+                size="sm"
+                placeholder="Search notes"
+                value={searchQuery}
+                onChange={handleSearchChange}
+            />
+            <ActionIcon size="input-sm" variant="transparent" aria-label="Settings">
+                <IconSquarePlus size={85} />
+            </ActionIcon>
+        </Flex>
     );
 }
 

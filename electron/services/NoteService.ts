@@ -21,10 +21,11 @@ class NoteService {
         fs.writeFileSync(this.dataFilePath, JSON.stringify(notes, null, 2), 'utf-8');
     }
 
-    public addNote(note: INote): void {
+    public async addNote(note: INote): Promise<INote[]> {
         const notes = this.readData();
         notes.push(note);
         this.writeData(notes);
+        return this.readData();
     }
 
     public editNote(note: INote): void {
