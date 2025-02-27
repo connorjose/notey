@@ -1,14 +1,17 @@
 import NoteItem from "./NoteItem";
 import { INote } from "../models/INote";
 
+interface NoteListProps {
+    notes: INote[]
+    selectedNote: number
+    onNoteSelect: (noteId: number) => void
+}
+
 function NoteList({
     notes, 
     selectedNote, 
     onNoteSelect
-}:{
-    notes: INote[], 
-    selectedNote: number, 
-    onNoteSelect: (noteId:number) => void }) {
+}: NoteListProps): JSX.Element {
 
     const rows: React.JSX.Element[] = [];
 

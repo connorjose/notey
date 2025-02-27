@@ -1,11 +1,14 @@
 import { TextInput } from "@mantine/core";
 
+interface SearchBoxProps {
+    searchQuery: string,
+    onSearch: (searchQuery: string) => void
+}
+
 function SearchBox({
     searchQuery, 
     onSearch
-}: {
-    searchQuery: string, 
-    onSearch: (searchQuery: string) => void }) {
+}: SearchBoxProps): JSX.Element {
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         onSearch(e.target.value)

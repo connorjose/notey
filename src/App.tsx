@@ -14,6 +14,7 @@ function App() {
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleNotes = (event: any, loadedNotes: INote[]) => {
+      // console.log('event', event);
       setNotes(loadedNotes);
     };
 

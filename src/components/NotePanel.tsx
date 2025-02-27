@@ -4,14 +4,17 @@ import NoteList from "./NoteList";
 import { INote } from "../models/INote";
 import { Space } from "@mantine/core";
 
+interface NotePanelProps {
+    notes: INote[]
+    selectedNote: number
+    onNoteSelect: (noteId: number) => void
+}
+
 function NotePanel({
     notes, 
     selectedNote,
     onNoteSelect,
-}: {
-    notes: INote[], 
-    selectedNote: number, 
-    onNoteSelect: (noteId: number) => void }) {
+}: NotePanelProps): JSX.Element {
     
     const [searchQuery, setSearchQuery] = useState("");
 

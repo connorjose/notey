@@ -7,16 +7,16 @@ import TextAlign from '@tiptap/extension-text-align';
 import { useState, useEffect } from "react";
 // import Superscript from '@tiptap/extension-superscript';
 // import SubScript from '@tiptap/extension-subscript';
+interface EditorAreaProps {
+    content: string,
+    onContentChange: (newContent: string) => void
+}
 
 function EditorArea({content,
         onContentChange
-    }: {
-        content:string,
-        onContentChange: (newContent:string) => void
-    }) {
+    }: EditorAreaProps): JSX.Element {
+        
     const [text, setText] = useState(content);
-
-    
 
     const editor = useEditor({
         extensions: [

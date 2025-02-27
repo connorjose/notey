@@ -1,19 +1,21 @@
 import { useState, useEffect } from "react";
 import { Textarea } from "@mantine/core";
 
+interface TextAreaProps {
+    content: string;
+    minRows: number;
+    maxRows: number;
+    size: string;
+    onContentChange: (newContent: string) => void;
+}
+
 function TextArea({
         content,
         minRows,
         maxRows,
         size,
         onContentChange
-    }: {
-        content: string,
-        minRows: number,
-        maxRows: number,
-        size: string,
-        onContentChange: (newContent: string) => void;
-    }) {
+    }: TextAreaProps): JSX.Element {
     const [text, setText] = useState(content)
     const placeholder = "Say something!";
 

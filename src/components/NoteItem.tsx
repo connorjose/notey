@@ -1,14 +1,17 @@
 import { INote } from "../models/INote";
 import { NavLink } from "@mantine/core";
 
+interface NoteItemProps {
+    note: INote,
+    onNoteClick: () => void,
+    selectedNote: number
+}
+
 function NoteItem({
     note, 
     onNoteClick,
     selectedNote
-}: {
-    note: INote, 
-    onNoteClick: () => void,
-    selectedNote: number}) {
+}: NoteItemProps): JSX.Element {
 
     const summary = note.content.substring(0, 30);
     const selected = selectedNote === note.id

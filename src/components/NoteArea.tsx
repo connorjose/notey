@@ -4,7 +4,12 @@ import { INote } from "../models/INote";
 import EditorArea from './EditorArea';
 import { Flex } from '@mantine/core';
 
-function NoteArea({note, onNoteUpdate}: {note: INote, onNoteUpdate: (updatedNote: INote) => void}) {
+interface NoteAreaProps {
+    note: INote;
+    onNoteUpdate: (updatedNote: INote) => void;
+}   
+
+function NoteArea({note, onNoteUpdate}: NoteAreaProps): JSX.Element {
 
     const handleTitleChange = (newTitle: string) => {
         onNoteUpdate({...note, title: newTitle})
