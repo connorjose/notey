@@ -36,19 +36,16 @@ function App() {
   };
 
   const handleAddNote = async () => {
-    console.log('Add note');
     const notes = await window.bridge.invoke('add-note', {
       title: 'New Note',
       content: '',
     });
-    console.log(notes);
+
     setNotes(notes);
   };
 
   const handleDeleteNote = async (noteId: number) => {
-    console.log('Delete note', noteId);
     const newNotes = await window.bridge.invoke('delete-note', noteId);
-    console.log(newNotes);
     setNotes(newNotes);
     setSelectedNote(
       selectedNote === notes.length - 1 ? selectedNote - 1 : selectedNote
