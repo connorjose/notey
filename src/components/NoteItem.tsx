@@ -1,30 +1,41 @@
+import { IconFileX } from "@tabler/icons-react";
 import { INote } from "../models/INote";
-import { NavLink } from "@mantine/core";
+import { ActionIcon, NavLink } from "@mantine/core";
 
 interface NoteItemProps {
     note: INote,
     onNoteClick: () => void,
-    selectedNote: number
+    selectedNote: number,
+    onDeleteClick: (noteId: number) => void
+    noteIndex: number
 }
 
 function NoteItem({
     note, 
     onNoteClick,
-    selectedNote
+    selectedNote,
+    onDeleteClick,
+    noteIndex
 }: NoteItemProps): JSX.Element {
-
-    const summary = note.content.substring(0, 30);
-    const selected = selectedNote === note.id
+    const summary = note.content.substring(0, 15);
+    const selected = selectedNote === noteIndex;
 
     return (
-        <NavLink
-            href="#"
-            key={note.id}
-            label={note.title}
-            active={selected}
-            description={summary}
-            onClick={onNoteClick}
-        />
+        <>
+            <NavLink
+                href="#"
+                key={noteIndex}
+                label={note.title}
+                active={selected}
+                description={summary}
+                onClick={onNoteClick}
+                rightSection={
+                    <ActionIcon onClick={(e) => { e.stopPropagation(); onDeleteClick(note.id); }}>
+                        <IconFileX />
+                    </ActionIcon>
+                }
+            />
+        </>
     );
 }
 

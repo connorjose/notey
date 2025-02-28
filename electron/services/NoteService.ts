@@ -48,7 +48,7 @@ class NoteService implements INoteService {
         return this.NOTES;
     }
 
-    public async removeNote(noteId: number): Promise<boolean> {
+    public async removeNote(noteId: number): Promise<INote[]> {
         const noteIndex = this.NOTES.findIndex(n => n.id === noteId);
         if (noteIndex === -1) {
             throw new Error(`Note with id ${noteId} not found`);
@@ -56,7 +56,7 @@ class NoteService implements INoteService {
         this.NOTES.splice(noteIndex, 1);
         this.writeData(this.NOTES);
 
-        return true;
+        return this.NOTES;
     }
 }
 

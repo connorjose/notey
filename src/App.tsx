@@ -12,20 +12,6 @@ function App() {
   const [notes, setNotes] = useState<INote[]>([]);
   const [selectedNote, setSelectedNote] = useState<number>(0);
 
-  // useEffect(() => {
-  //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //   const handleNotes = (event: any, loadedNotes: INote[]) => {
-  //     // console.log('event', event);
-  //     setNotes(loadedNotes);
-  //   };
-
-  //   window.bridge.on('note-data', handleNotes);
-
-  //   return () => {
-  //     window.bridge.off('note-data', handleNotes);
-  //   };
-  // }, []); // Empty dependency array ensures this runs only once
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleNotes = (event: any, loadedNotes: INote[]) => {
     // console.log('event', event);
@@ -41,6 +27,8 @@ function App() {
   };
 
   const handleNoteUpdate = (updatedNote: INote) => {
+
+    window.bridge.invoke('edit-note', updatedNote);
     setNotes((prevNotes) =>
       prevNotes?.map((note, idx) =>
         idx === selectedNote ? updatedNote : note
@@ -58,11 +46,27 @@ function App() {
     setNotes(notes);
   };
 
+  const handleDeleteNote = async (noteId: number) => {
+    console.log('Delete note', noteId);
+    const newNotes = await window.bridge.invoke('delete-note', noteId);
+    console.log(newNotes);
+    setNotes(newNotes);
+    setSelectedNote(
+      selectedNote === notes.length - 1 ? selectedNote - 1 : selectedNote
+    );
+  };
+
   return (
     <MantineProvider>
       <Container fluid>
             <Flex gap="xl" direction="row" justify={Center} align={Center}>
-                <NotePanel notes={notes} selectedNote={selectedNote} onNoteSelect={handleNoteChange} onNoteAdd={handleAddNote} />
+                <NotePanel 
+                  notes={notes} 
+                  selectedNote={selectedNote} 
+                  onNoteSelect={handleNoteChange} 
+                  onNoteAdd={handleAddNote} 
+                  onNoteDelete={handleDeleteNote}
+                />
                 {selectedNoteData && (
                     <NoteArea note={selectedNoteData} onNoteUpdate={handleNoteUpdate} />
                 )}

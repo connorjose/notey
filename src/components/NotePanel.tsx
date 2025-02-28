@@ -9,13 +9,15 @@ interface NotePanelProps {
     selectedNote: number
     onNoteSelect: (noteId: number) => void
     onNoteAdd: () => void
+    onNoteDelete: (noteId: number) => void
 }
 
 function NotePanel({
     notes, 
     selectedNote,
     onNoteSelect,
-    onNoteAdd
+    onNoteAdd,
+    onNoteDelete
 }: NotePanelProps): JSX.Element {
     
     const [searchQuery, setSearchQuery] = useState("");
@@ -30,12 +32,16 @@ function NotePanel({
         
     })
 
-
     return (
         <Container fluid>
             <SearchBox searchQuery={searchQuery} onSearch={setSearchQuery} addNote={onNoteAdd} />
             <Space h='sm' />
-            <NoteList notes={filteredNotes} selectedNote={selectedNote} onNoteSelect={onNoteSelect} />
+            <NoteList 
+                notes={filteredNotes} 
+                selectedNote={selectedNote} 
+                onNoteSelect={onNoteSelect} 
+                onNoteDelete={onNoteDelete}
+            />
         </Container>
     )
 }

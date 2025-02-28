@@ -5,24 +5,28 @@ interface NoteListProps {
     notes: INote[]
     selectedNote: number
     onNoteSelect: (noteId: number) => void
+    onNoteDelete: (noteId: number) => void
 }
 
 function NoteList({
     notes, 
     selectedNote, 
-    onNoteSelect
+    onNoteSelect,
+    onNoteDelete
 }: NoteListProps): JSX.Element {
 
     const rows: React.JSX.Element[] = [];
 
-    const handleSelect = (noteId:number) =>
-    {
-        onNoteSelect(noteId);
-    }
-
-    notes.forEach(note => {
+    notes.forEach((note, idx) => {
         rows.push(
-            <NoteItem note={note} key={note.id} selectedNote={selectedNote} onNoteClick={() => {handleSelect(note.id)}} />
+            <NoteItem 
+                note={note} 
+                key={idx} 
+                selectedNote={selectedNote} 
+                onNoteClick={() => {onNoteSelect(idx)}} 
+                onDeleteClick={onNoteDelete}
+                noteIndex={idx}
+            />
         );
     });
 

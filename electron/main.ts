@@ -54,6 +54,14 @@ function createWindow() {
     return await noteService.addNote(note);
   });
 
+  ipcMain.handle('delete-note', async (_, noteId) => {
+    return await noteService.removeNote(noteId);
+  });
+
+  ipcMain.handle('edit-note', async (_, note) => {
+    return await noteService.editNote(note);
+  });
+
   win.webContents.openDevTools();
 }
 
