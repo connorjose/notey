@@ -1,11 +1,9 @@
-import { app, BrowserWindow } from 'electron'
-// import { createRequire } from 'node:module'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
-import NOTES from '../src/data/noteData'
-// import { INoteService } from './services/INoteService'
+import { INoteService } from './services/INoteService'
+import NoteService from './services/NoteService'
 
-// const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // The built directory structure
@@ -27,7 +25,7 @@ export const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist')
 process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 'public') : RENDERER_DIST
 
 let win: BrowserWindow | null
-// const noteService: INoteService;
+const noteService: INoteService = new NoteService();
 
 function createWindow() {
   win = new BrowserWindow({
@@ -42,7 +40,7 @@ function createWindow() {
   // Test active push message to Renderer-process.
   win.webContents.once('did-finish-load', () => {
     win?.webContents.send('main-process-message', (new Date).toLocaleString());
-    win?.webContents.send('note-data', NOTES);
+    win?.webContents.send('note-data', noteService.getNotes());
   });
 
   if (VITE_DEV_SERVER_URL) {
@@ -52,7 +50,9 @@ function createWindow() {
     win.loadFile(path.join(RENDERER_DIST, 'index.html'))
   }
 
-  // ipcMain.handle('add-note', );
+  ipcMain.handle('add-note', async (_, note) => {
+    return await noteService.addNote(note);
+  });
 
   win.webContents.openDevTools();
 }

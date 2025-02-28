@@ -22,7 +22,7 @@ function NoteArea({note, onNoteUpdate}: NoteAreaProps): JSX.Element {
     return (
         <Flex direction="column" gap="sm" className="note-area">
             <TextArea content={note.title} onContentChange={handleTitleChange} minRows={1} maxRows={1} size='xl'/>
-            <EditorArea content={note.content} onContentChange={handleContentChange}/>
+            <EditorArea content={note.content ?? ""} onContentChange={handleContentChange}/>
         </Flex>
     );
 }
