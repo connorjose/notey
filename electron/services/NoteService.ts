@@ -10,13 +10,27 @@ class NoteService implements INoteService {
 
     constructor() {
         this.dataFilePath = path.join(process.cwd(), 'electron/data/notes.json')
+        this.initNote();
         this.NOTES = this.readData();
     }
 
+    private initNote()
+    {
+        if (fs.existsSync(this.dataFilePath)) return;
+        
+        // Init note folder and file
+        fs.mkdirSync(path.dirname(this.dataFilePath), { recursive: true });
+        fs.writeFileSync(this.dataFilePath, '[]', 'utf8');
+        const note: INote[] = [{
+            id: 0,
+            title: 'Untitled',
+            content: ''
+        }]
+
+        this.writeData(note);
+    }
+
     private readData(): INote[] {
-        if (!fs.existsSync(this.dataFilePath)) {
-            return [];
-        }
         const data = fs.readFileSync(this.dataFilePath, 'utf8');
         return JSON.parse(data);
     }

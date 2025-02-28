@@ -156,3 +156,6 @@ dist
 
 # build
 dist*
+
+#notes data
+*notes.json
