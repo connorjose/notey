@@ -27,7 +27,6 @@ function App() {
   };
 
   const handleNoteUpdate = (updatedNote: INote) => {
-
     window.bridge.invoke('edit-note', updatedNote);
     setNotes((prevNotes) =>
       prevNotes?.map((note, idx) =>

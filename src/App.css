@@ -18,6 +18,14 @@
   flex-direction: column;
   gap: 1em 0;
 }
+
+.delete-button {
+  visibility: hidden;
+}
+
+.note-item:hover .delete-button {
+  visibility: visible;
+}
  
 /* .note-panel {
   padding-top: 1em;

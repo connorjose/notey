@@ -23,6 +23,7 @@ function NoteItem({
     return (
         <>
             <NavLink
+                className="note-item"
                 href="#"
                 key={noteIndex}
                 label={note.title}
@@ -30,7 +31,10 @@ function NoteItem({
                 description={summary}
                 onClick={onNoteClick}
                 rightSection={
-                    <ActionIcon onClick={(e) => { e.stopPropagation(); onDeleteClick(note.id); }}>
+                    <ActionIcon 
+                        className="delete-button" 
+                        color="red" 
+                        onClick={(e) => { e.stopPropagation(); onDeleteClick(note.id); }}>
                         <IconFileX />
                     </ActionIcon>
                 }
