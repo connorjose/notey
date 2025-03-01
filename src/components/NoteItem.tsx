@@ -17,8 +17,9 @@ function NoteItem({
     onDeleteClick,
     noteIndex
 }: NoteItemProps): JSX.Element {
-    const summary = note.content.substring(0, 15);
+    const summary = note.content.length > 20 ? note.content.substring(0, 20) + '...' : note.content;
     const selected = selectedNote === noteIndex;
+    const title = note.title.length > 15 ? note.title.substring(0, 15) + '...' : note.title;
 
     return (
         <>
@@ -26,9 +27,10 @@ function NoteItem({
                 className="note-item"
                 href="#"
                 key={noteIndex}
-                label={note.title}
+                label={title}
                 active={selected}
                 description={summary}
+                noWrap={true}
                 onClick={onNoteClick}
                 rightSection={
                     <ActionIcon 
