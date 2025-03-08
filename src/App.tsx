@@ -37,7 +37,7 @@ function App() {
 
   const handleAddNote = async () => {
     const notes = await window.bridge.invoke('add-note', {
-      title: 'New Note',
+      title: 'Untitled',
       content: '',
     });
 

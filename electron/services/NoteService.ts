@@ -5,11 +5,10 @@ import * as fs from 'fs';
 
 class NoteService implements INoteService {
 
-    private dataFilePath: string
+    private readonly dataFilePath: string = path.join(process.cwd(), 'electron/data/notes.json');
     private NOTES: INote[];
 
     constructor() {
-        this.dataFilePath = path.join(process.cwd(), 'electron/data/notes.json')
         this.initNote();
         this.NOTES = this.readData();
     }
