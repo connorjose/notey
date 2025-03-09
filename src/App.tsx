@@ -22,11 +22,11 @@ function App() {
 
   const selectedNoteData = notes?.[selectedNote];
 
-  const handleNoteChange = (noteId: number) => {
+  const changeSelectedNote = (noteId: number) => {
     setSelectedNote(noteId);
   };
 
-  const handleNoteUpdate = (updatedNote: INote) => {
+  const updateNote = (updatedNote: INote) => {
     window.bridge.invoke('edit-note', updatedNote);
     setNotes((prevNotes) =>
       prevNotes?.map((note, idx) =>
@@ -35,21 +35,27 @@ function App() {
     );
   };
 
-  const handleAddNote = async () => {
+  const addNote = async () => {
     const notes: INote[] = await window.bridge.invoke('add-note', {
       title: 'Untitled',
       content: '',
     });
     setNotes(notes);
-    handleNoteChange(notes.length - 1);
+    changeSelectedNote(notes.length - 1);
+
+    return notes;
   };
 
-  const handleDeleteNote = async (noteId: number) => {
-    const newNotes = await window.bridge.invoke('delete-note', noteId);
+  const deleteNote = async (noteId: number) => {
+    let newNotes = await window.bridge.invoke('delete-note', noteId);
+    if (newNotes.length === 0) {
+      newNotes = await addNote();
+    }
+
     setNotes(newNotes);
-    setSelectedNote(
-      selectedNote === notes.length - 1 ? selectedNote - 1 : selectedNote
-    );
+    setSelectedNote(() => {
+      return newNotes.length > 0 ? Math.max(newNotes.length - 1, 0) : 0;
+    });
   };
 
   return (
@@ -59,12 +65,12 @@ function App() {
                 <NotePanel 
                   notes={notes} 
                   selectedNote={selectedNote} 
-                  onNoteSelect={handleNoteChange} 
-                  onNoteAdd={handleAddNote} 
-                  onNoteDelete={handleDeleteNote}
+                  changeSelectedNote={changeSelectedNote} 
+                  addNote={addNote} 
+                  deleteNote={deleteNote}
                 />
                 {selectedNoteData && (
-                    <NoteArea note={selectedNoteData} onNoteUpdate={handleNoteUpdate} />
+                    <NoteArea note={selectedNoteData} onNoteUpdate={updateNote} />
                 )}
             </Flex>
         </Container>

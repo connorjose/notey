@@ -7,17 +7,17 @@ import { Container, Space } from "@mantine/core";
 interface NotePanelProps {
     notes: INote[]
     selectedNote: number
-    onNoteSelect: (noteId: number) => void
-    onNoteAdd: () => void
-    onNoteDelete: (noteId: number) => void
+    changeSelectedNote: (noteId: number) => void
+    addNote: () => void
+    deleteNote: (noteId: number) => void
 }
 
 function NotePanel({
     notes, 
     selectedNote,
-    onNoteSelect,
-    onNoteAdd,
-    onNoteDelete
+    changeSelectedNote,
+    addNote,
+    deleteNote
 }: NotePanelProps): JSX.Element {
     
     const [searchQuery, setSearchQuery] = useState("");
@@ -34,13 +34,13 @@ function NotePanel({
 
     return (
         <Container fluid>
-            <SearchBox searchQuery={searchQuery} onSearch={setSearchQuery} addNote={onNoteAdd} />
+            <SearchBox searchQuery={searchQuery} onSearch={setSearchQuery} addNote={addNote} />
             <Space h='sm' />
             <NoteList 
                 notes={filteredNotes} 
                 selectedNote={selectedNote} 
-                onNoteSelect={onNoteSelect} 
-                onNoteDelete={onNoteDelete}
+                onNoteSelect={changeSelectedNote} 
+                onNoteDelete={deleteNote}
             />
         </Container>
     )

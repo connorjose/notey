@@ -70,6 +70,7 @@ class NoteService implements INoteService {
         this.NOTES.forEach((note, idx) => {
             note.id = idx
         });
+
         this.writeData(this.NOTES);
 
         return this.NOTES;
