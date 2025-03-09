@@ -67,6 +67,9 @@ class NoteService implements INoteService {
             throw new Error(`Note with id ${noteId} not found`);
         }
         this.NOTES.splice(noteIndex, 1);
+        this.NOTES.forEach((note, idx) => {
+            note.id = idx
+        });
         this.writeData(this.NOTES);
 
         return this.NOTES;

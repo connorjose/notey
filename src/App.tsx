@@ -36,12 +36,12 @@ function App() {
   };
 
   const handleAddNote = async () => {
-    const notes = await window.bridge.invoke('add-note', {
+    const notes: INote[] = await window.bridge.invoke('add-note', {
       title: 'Untitled',
       content: '',
     });
-
     setNotes(notes);
+    handleNoteChange(notes.length - 1);
   };
 
   const handleDeleteNote = async (noteId: number) => {
