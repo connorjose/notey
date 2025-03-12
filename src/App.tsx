@@ -3,7 +3,7 @@ import '@mantine/core/styles.css';
 import '@mantine/tiptap/styles.css';
 
 import { MantineProvider, Center, Container, Flex } from '@mantine/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { INote } from './models/INote';
 import NotePanel from './components/NotePanel';
 import NoteArea from './components/NoteArea';
@@ -18,7 +18,13 @@ function App() {
     setNotes(loadedNotes);
   };
 
-  window.bridge.on('note-data', handleNotes);
+  useEffect(() => {
+    window.bridge.on("note-data", handleNotes);
+
+    return () => {
+      window.bridge.off("note-data", handleNotes);
+    };
+  }, []);
 
   const selectedNoteData = notes?.[selectedNote];
 
@@ -47,14 +53,14 @@ function App() {
   };
 
   const deleteNote = async (noteId: number) => {
-    let newNotes = await window.bridge.invoke('delete-note', noteId);
-    if (newNotes.length === 0) {
-      newNotes = await addNote();
+    let notes: INote[] = await window.bridge.invoke('delete-note', noteId);
+    if (notes.length === 0) {
+      notes = await addNote();
     }
 
-    setNotes(newNotes);
+    setNotes(notes);
     setSelectedNote(() => {
-      return newNotes.length > 0 ? Math.max(newNotes.length - 1, 0) : 0;
+      return notes.length > 0 ? Math.max(notes.length - 1, 0) : 0;
     });
   };
 
