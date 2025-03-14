@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import { INoteService } from './services/INoteService'
 import NoteService from './services/NoteService'
+import { INote } from '../src/models/INote'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -50,15 +51,15 @@ function createWindow() {
     win.loadFile(path.join(RENDERER_DIST, 'index.html'))
   }
 
-  ipcMain.handle('add-note', async (_, note) => {
+  ipcMain.handle('add-note', async (_, note: INote) => {
     return await noteService.addNote(note);
   });
 
-  ipcMain.handle('delete-note', async (_, noteId) => {
+  ipcMain.handle('delete-note', async (_, noteId: number) => {
     return await noteService.removeNote(noteId);
   });
 
-  ipcMain.handle('edit-note', async (_, note) => {
+  ipcMain.handle('edit-note', async (_, note: INote) => {
     return await noteService.editNote(note);
   });
 
