@@ -27,9 +27,15 @@ function createWindow() {
   })
 
   // Test active push message to Renderer-process.
-  win.webContents.once('did-finish-load', () => {
+  win.webContents.once('did-finish-load', async () => {
     win?.webContents.send('main-process-message', (new Date).toLocaleString());
-    win?.webContents.send('note-data', noteService.getNotes());
+
+    try {
+      const notes = await noteService.getNotes();
+      win?.webContents.send('note-data', notes);
+    } catch (error) {
+      console.error('Error fetching notes:', error); 
+    }
   });
 
   if (VITE_DEV_SERVER_URL) {
