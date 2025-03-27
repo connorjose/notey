@@ -1,21 +1,10 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
-import { INoteService } from './services/INoteService'
-import NoteService from './services/NoteService'
-import { INote } from '../src/models/INote'
+import { registerHandlers } from './handlers/NoteIPCHandlers'
+import noteService from './services/NoteService'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-
-// The built directory structure
-//
-// ├─┬─┬ dist
-// │ │ └── index.html
-// │ │
-// │ ├─┬ dist-electron
-// │ │ ├── main.js
-// │ │ └── preload.mjs
-// │
 process.env.APP_ROOT = path.join(__dirname, '..')
 
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin - Vite@2.x
@@ -26,7 +15,6 @@ export const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist')
 process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 'public') : RENDERER_DIST
 
 let win: BrowserWindow | null
-const noteService: INoteService = new NoteService();
 
 function createWindow() {
   win = new BrowserWindow({
@@ -47,24 +35,13 @@ function createWindow() {
   if (VITE_DEV_SERVER_URL) {
     win.loadURL(VITE_DEV_SERVER_URL)
   } else {
-    // win.loadFile('dist/index.html')
     win.loadFile(path.join(RENDERER_DIST, 'index.html'))
   }
 
-  ipcMain.handle('add-note', async (_, note: INote) => {
-    return await noteService.addNote(note);
-  });
-
-  ipcMain.handle('delete-note', async (_, noteId: number) => {
-    return await noteService.removeNote(noteId);
-  });
-
-  ipcMain.handle('edit-note', async (_, note: INote) => {
-    return await noteService.editNote(note);
-  });
-
   win.webContents.openDevTools();
 }
+
+registerHandlers();
 
 app.whenReady().then(createWindow)
 

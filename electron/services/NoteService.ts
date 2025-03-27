@@ -3,78 +3,71 @@ import { INoteService } from './INoteService';
 import path from 'node:path';
 import * as fs from 'fs';
 
-class NoteService implements INoteService {
 
-    private readonly dataFilePath: string = path.join(process.cwd(), 'electron/data/notes.json');
-    private NOTES: INote[];
+const dataFilePath: string = path.join(process.cwd(), 'electron/data/notes.json');
 
-    constructor() {
-        this.initNote();
-        this.NOTES = this.readData();
-    }
+function initNote()
+{
+    if (fs.existsSync(dataFilePath)) return;
+    
+    // Init note folder and file
+    fs.mkdirSync(path.dirname(dataFilePath), { recursive: true });
+    fs.writeFileSync(dataFilePath, '[]', 'utf8');
+    const note: INote[] = [{
+        id: 0,
+        title: 'Untitled',
+        content: ''
+    }]
 
-    private initNote()
-    {
-        if (fs.existsSync(this.dataFilePath)) return;
-        
-        // Init note folder and file
-        fs.mkdirSync(path.dirname(this.dataFilePath), { recursive: true });
-        fs.writeFileSync(this.dataFilePath, '[]', 'utf8');
-        const note: INote[] = [{
-            id: 0,
-            title: 'Untitled',
-            content: ''
-        }]
+    writeData(note);
+}
 
-        this.writeData(note);
-    }
+function readData(): INote[] {
+    const data = fs.readFileSync(dataFilePath, 'utf8');
+    return JSON.parse(data);
+}
 
-    private readData(): INote[] {
-        const data = fs.readFileSync(this.dataFilePath, 'utf8');
-        return JSON.parse(data);
-    }
+function writeData(notes: INote[]): void {
+    fs.writeFileSync(dataFilePath, JSON.stringify(notes), 'utf8');
+}
 
-    private writeData(notes: INote[]): void {
-        fs.writeFileSync(this.dataFilePath, JSON.stringify(notes), 'utf8');
-    }
+const noteService: INoteService = {
+    getNotes: () => readData(),
 
-    public getNotes(): INote[] {
-        return this.NOTES;
-    }
+    addNote: async(note: INote) => {
+        const notes = readData();
+        note.id = notes.length;
+        notes.push(note);
+        writeData(notes);
+        return notes;
+    },
 
-    public async addNote(note: INote): Promise<INote[]> {
-        note.id = this.NOTES.length;
-        this.NOTES.push(note);
-        this.writeData(this.NOTES);
-        return this.NOTES;
-    }
-
-    public async editNote(note: INote): Promise<INote[]> {
-        const noteToEdit = this.NOTES.find(n => n.id === note.id);
+    editNote: async(note: INote) => {
+        const notes = readData();
+        const noteToEdit = notes.find(n => n.id === note.id);
         if (!noteToEdit) {
             throw new Error(`Note with id ${note.id} not found`);
         }
         noteToEdit.title = note.title;
         noteToEdit.content = note.content;
+        return notes;
+    },
 
-        this.writeData(this.NOTES);
-        return this.NOTES;
-    }
-
-    public async removeNote(noteId: number): Promise<INote[]> {
-        const noteIndex = this.NOTES.findIndex(n => n.id === noteId);
+    removeNote: async(noteId: number) => {
+        let notes = readData();
+        const noteIndex = notes.findIndex(n => n.id === noteId);
         if (noteIndex === -1) {
             throw new Error(`Note with id ${noteId} not found`);
         }
-        this.NOTES.splice(noteIndex, 1);
-        this.NOTES.forEach((note, idx) => {
-            note.id = idx
-        });
-
-        this.writeData(this.NOTES);
-
-        return this.NOTES;
+        notes.splice(noteIndex, 1);
+        notes = notes.map((note, idx) => ({ ...note, id: idx })); // Re-index IDs
+        writeData(notes);
+        return notes;
     }
+
 }
 
-export default NoteService;
+// Init notes on import
+initNote();
+
+export default noteService;
