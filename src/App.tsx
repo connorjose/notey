@@ -13,7 +13,7 @@ function App() {
   const [selectedNote, setSelectedNote] = useState<number>(0);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleNotes = (event: any, loadedNotes: INote[]) => {
+  const handleNotes = (_: any, loadedNotes: INote[]) => {
     // console.log('event', event);
     setNotes(loadedNotes);
   };
