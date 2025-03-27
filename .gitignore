@@ -159,4 +159,3 @@ dist*
 
 # notes data
 */data/notes.json
-*.db

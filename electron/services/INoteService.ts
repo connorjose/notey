@@ -1,7 +1,7 @@
 import { INote } from '../../src/models/INote';
 
 export type INoteService = {
-    getNotes: () => INote[];
+    getNotes: () => Promise<INote[]>;
     addNote: (note: INote) => Promise<INote[]>;
     editNote: (note: INote) => void;
     removeNote: (noteId: number) => Promise<INote[]>;
