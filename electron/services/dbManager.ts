@@ -7,6 +7,7 @@ let db: Database.Database;
 
 try {
     db = new Database(dbPath);
+    db.prepare('CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT)').run();
 } catch (error) { 
     console.error('Error opening database:', error);
     throw new Error('Database initialization failed.');
