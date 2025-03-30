@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import { registerHandlers } from './handlers/NoteIPCHandlers'
 import noteService from './services/NoteService'
+import { INote } from '../src/models/INote'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 process.env.APP_ROOT = path.join(__dirname, '..')
@@ -27,11 +28,19 @@ function createWindow() {
   })
 
   // Test active push message to Renderer-process.
-  win.webContents.once('did-finish-load', async () => {
-    win?.webContents.send('main-process-message', (new Date).toLocaleString());
-
+  win.webContents.once('did-finish-load', () => {
     try {
-      const notes = await noteService.getNotes();
+      let notes: INote[] = noteService.getNotes();
+      if (notes.length < 1) {
+        const introNote: INote = {
+          id: 1,
+          title: "Welcome to note app",
+          content: "This is a sample note. You can edit this note or add a new one."
+        }
+        noteService.addNote(introNote);
+        notes = noteService.getNotes();
+      }
+
       win?.webContents.send('note-data', notes);
     } catch (error) {
       console.error('Error fetching notes:', error); 
@@ -47,12 +56,15 @@ function createWindow() {
   win.webContents.openDevTools();
 }
 
-registerHandlers();
-
-app.whenReady().then(createWindow)
+// TODO: Add app event handlers and crash handling
+app.whenReady().then(() => {
+  registerHandlers();
+  createWindow()
+}, (error) => console.error('Error loading app:', error));
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
+    noteService.close();
     app.quit()
     win = null
   }
