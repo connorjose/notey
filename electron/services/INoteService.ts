@@ -5,4 +5,5 @@ export type INoteService = {
     addNote: (note: INote) => Promise<INote[]>;
     editNote: (note: INote) => void;
     removeNote: (noteId: number) => Promise<INote[]>;
+    close: () => void;
 }

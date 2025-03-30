@@ -29,10 +29,18 @@ function createWindow() {
 
   // Test active push message to Renderer-process.
   win.webContents.once('did-finish-load', () => {
-    win?.webContents.send('main-process-message', (new Date).toLocaleString());
-
     try {
-      const notes: INote[] = noteService.getNotes();
+      let notes: INote[] = noteService.getNotes();
+      if (notes.length < 1) {
+        const introNote: INote = {
+          id: 1,
+          title: "Welcome to note app",
+          content: "This is a sample note. You can edit this note or add a new one."
+        }
+        noteService.addNote(introNote);
+        notes = noteService.getNotes();
+      }
+
       win?.webContents.send('note-data', notes);
     } catch (error) {
       console.error('Error fetching notes:', error); 
@@ -56,6 +64,7 @@ app.whenReady().then(() => {
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
+    noteService.close();
     app.quit()
     win = null
   }
