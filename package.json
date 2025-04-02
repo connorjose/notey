@@ -8,7 +8,45 @@
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postinstall": "electron-rebuild"
+  },
+  "build": {
+    "appId": "com.connorjose.notey",
+    "asar": true,
+    "productName": "Notey",
+    "directories": {
+      "output": "release/${version}"
+    },
+    "files": [
+      "dist",
+      "dist-electron"
+    ],
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "artifactName": "${productName}-Mac-${version}-Installer.${ext}"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": false,
+      "allowElevation": true,
+      "runAfterFinish": true
+    }
   },
   "dependencies": {
     "@mantine/core": "^7.13.3",
