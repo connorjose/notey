@@ -1,7 +1,8 @@
 import Database  from 'better-sqlite3';
 import path from 'node:path';
+import { app } from 'electron';
 
-const dbPath = path.join(process.cwd(), 'electron/data/notes.db');
+const dbPath = path.join(app.getPath('userData'), 'notes.db');
 
 let db: Database.Database;
 

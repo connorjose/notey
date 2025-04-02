@@ -156,6 +156,7 @@ dist
 
 # build
 dist*
+release*
 
 # notes data
 */data/notes.json
