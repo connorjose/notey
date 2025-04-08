@@ -35,7 +35,6 @@ function createWindow() {
     win.loadFile(path.join(RENDERER_DIST, 'index.html'))
   }
 
-  // Test active push message to Renderer-process.
   win.webContents.once('did-finish-load', () => {
     try {
       let notes: INote[] = noteService.getNotes();
@@ -56,10 +55,9 @@ function createWindow() {
   });
 }
 
-// TODO: Add app event handlers and crash handling
 app.whenReady().then(() => {
   registerHandlers();
-  createWindow()
+  createWindow();
 }, (error) => console.error('Error loading app:', error));
 
 app.on('window-all-closed', () => {
