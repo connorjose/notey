@@ -26,10 +26,14 @@
 .note-item:hover .delete-button {
   visibility: visible;
 }
- 
-/* .note-panel {
-  padding-top: 1em;
-} */
 
+/* .add-note-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+} */
 
 
