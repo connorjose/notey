@@ -12,6 +12,14 @@ function App() {
   const [notes, setNotes] = useState<INote[]>([]);
   const [selectedNote, setSelectedNote] = useState<number>(0);
   const theme = createTheme({
+    primaryColor: 'gray',
+    colors: {
+      gray: [
+        '#f8f9fa', '#f1f3f5', '#e9ecef', '#dee2e6', '#ced4da',
+        '#adb5bd', '#868e96', '#495057', '#343a40', '#212529',
+      ],
+    },
+    primaryShade: { light: 6, dark: 4 },
     breakpoints: {
       xs: '30em',
       sm: '48em',
@@ -75,8 +83,8 @@ function App() {
 
   return (
     <MantineProvider theme={theme} defaultColorScheme='dark'>
-      <Container fluid>
-            <Flex gap="xl" direction="row" justify={Center} align={Center}>
+      <Container fluid className="app-container">
+            <Flex gap="xl" direction="row" justify="center" align="flex-start">
                 <NotePanel 
                   notes={notes} 
                   selectedNote={selectedNote} 
