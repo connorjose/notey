@@ -7,6 +7,7 @@ const noteService: INoteService = {
         return db.prepare('SELECT * FROM notes').all() as INote[];
     },
 
+    // TODO: Implement a better way to add notes (prevent duplicates, etc.)
     addNote: async(note: INote) => {
         const query = db.prepare('INSERT INTO notes (title, content) VALUES (?, ?)');
         query?.run(note.title, note.content);

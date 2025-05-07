@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SearchBox from "./SearchBox";
 import NoteList from "./NoteList";
 import { INote } from "../models/INote";
@@ -21,6 +21,21 @@ function NotePanel({
 }: NotePanelProps): JSX.Element {
     
     const [searchQuery, setSearchQuery] = useState("");
+    const searchBox = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        window.bridge.on("focus-search", focusSearchBox);
+
+        return () => {
+            window.bridge.off("focus-search", focusSearchBox)
+        };
+    }, []);
+
+    const focusSearchBox = () => {
+        if (searchBox.current) {
+            searchBox.current.focus();
+        }
+    }
 
     const filteredNotes = notes.filter((note) => {
         const lowerCaseQuery = searchQuery.trim().toLowerCase();
@@ -34,7 +49,12 @@ function NotePanel({
 
     return (
         <Container fluid>
-            <SearchBox searchQuery={searchQuery} onSearch={setSearchQuery} addNote={addNote} />
+            <SearchBox 
+                searchQuery={searchQuery} 
+                onSearch={setSearchQuery} 
+                addNote={addNote} 
+                toggleSearchBoxFocus={searchBox}
+            />
             <Space h='sm' />
             <NoteList 
                 notes={filteredNotes} 

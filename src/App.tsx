@@ -2,7 +2,7 @@ import './App.css';
 import '@mantine/core/styles.css';
 import '@mantine/tiptap/styles.css';
 
-import { MantineProvider, Center, Container, Flex } from '@mantine/core';
+import { MantineProvider, Container, Flex, createTheme } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { INote } from './models/INote';
 import NotePanel from './components/NotePanel';
@@ -11,6 +11,23 @@ import NoteArea from './components/NoteArea';
 function App() {
   const [notes, setNotes] = useState<INote[]>([]);
   const [selectedNote, setSelectedNote] = useState<number>(0);
+  const theme = createTheme({
+    primaryColor: 'gray',
+    colors: {
+      gray: [
+        '#f8f9fa', '#f1f3f5', '#e9ecef', '#dee2e6', '#ced4da',
+        '#adb5bd', '#868e96', '#495057', '#343a40', '#212529',
+      ],
+    },
+    primaryShade: { light: 6, dark: 4 },
+    breakpoints: {
+      xs: '30em',
+      sm: '48em',
+      md: '64em',
+      lg: '74em',
+      xl: '90em',
+    },
+  });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleNotes = (_: any, loadedNotes: INote[]) => {
@@ -65,9 +82,9 @@ function App() {
   };
 
   return (
-    <MantineProvider>
-      <Container fluid>
-            <Flex gap="xl" direction="row" justify={Center} align={Center}>
+    <MantineProvider theme={theme} defaultColorScheme='dark'>
+      <Container fluid className="app-container">
+            <Flex gap="xl" direction="row" justify="center" align="flex-start">
                 <NotePanel 
                   notes={notes} 
                   selectedNote={selectedNote} 
