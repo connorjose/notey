@@ -21,19 +21,21 @@ function NotePanel({
 }: NotePanelProps): JSX.Element {
     
     const [searchQuery, setSearchQuery] = useState("");
-    const focusSearchBox = useRef<HTMLInputElement>(null);
+    const searchBox = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.ctrlKey && event.key === 'f') {
-                event.preventDefault();
-                focusSearchBox.current?.focus();
-            }
-        }
+        window.bridge.on("focus-search", focusSearchBox);
 
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
+        return () => {
+            window.bridge.off("focus-search", focusSearchBox)
+        };
     }, []);
+
+    const focusSearchBox = () => {
+        if (searchBox.current) {
+            searchBox.current.focus();
+        }
+    }
 
     const filteredNotes = notes.filter((note) => {
         const lowerCaseQuery = searchQuery.trim().toLowerCase();
@@ -51,7 +53,7 @@ function NotePanel({
                 searchQuery={searchQuery} 
                 onSearch={setSearchQuery} 
                 addNote={addNote} 
-                toggleSearchBoxFocus={focusSearchBox}
+                toggleSearchBoxFocus={searchBox}
             />
             <Space h='sm' />
             <NoteList 

@@ -2,7 +2,7 @@ import './App.css';
 import '@mantine/core/styles.css';
 import '@mantine/tiptap/styles.css';
 
-import { MantineProvider, Center, Container, Flex, createTheme } from '@mantine/core';
+import { MantineProvider, Container, Flex, createTheme } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { INote } from './models/INote';
 import NotePanel from './components/NotePanel';
