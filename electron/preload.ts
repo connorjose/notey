@@ -18,7 +18,5 @@ contextBridge.exposeInMainWorld('bridge', {
     const [channel, ...omit] = args
     return ipcRenderer.invoke(channel, ...omit)
   },
-
-  // You can expose other APTs you need here.
-  // ...
+  platform: process.platform
 })

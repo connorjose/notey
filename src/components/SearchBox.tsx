@@ -19,11 +19,15 @@ function SearchBox({
         onSearch(e.target.value)
     }
 
+    const platform = window.bridge.platform;
+    const isMac = platform === 'darwin';
+    const searchAccelerator = isMac ? '⌘+F' : 'Ctrl+F';
+
     return (
         <Flex align="center" justify="space-between">
             <TextInput 
                 size="sm"
-                placeholder="Search notes (Ctrl + F)"
+                placeholder={`Search notes ${searchAccelerator}`}
                 value={searchQuery}
                 onChange={handleSearchChange}
                 ref={toggleSearchBoxFocus}

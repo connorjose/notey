@@ -32,7 +32,6 @@ export function createMenuTemplate (window: Electron.BrowserWindow) {
                     label: 'Search Notes',
                     accelerator: searchAccelerator,
                     click: () => {
-                        console.log('Search Notes clicked');
                         window.webContents.send('focus-search');
                     }
                 },
