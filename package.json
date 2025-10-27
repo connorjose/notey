@@ -49,15 +49,6 @@
     }
   },
   "dependencies": {
-    "@mantine/core": "^7.13.3",
-    "@mantine/hooks": "^7.13.3",
-    "@mantine/tiptap": "^7.13.3",
-    "@tabler/icons-react": "^3.30.0",
-    "@tiptap/extension-link": "^2.9.1",
-    "@tiptap/extension-text-align": "^2.9.1",
-    "@tiptap/pm": "^2.9.1",
-    "@tiptap/react": "^2.9.1",
-    "@tiptap/starter-kit": "^2.9.1",
     "better-sqlite3": "^11.9.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
