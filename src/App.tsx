@@ -61,20 +61,20 @@ function App() {
   };
 
   return (
-      <div className="app-container">
-            <div>
-                <NotePanel 
-                  notes={notes} 
-                  selectedNote={selectedNote} 
-                  changeSelectedNote={changeSelectedNote} 
-                  addNote={addNote} 
-                  deleteNote={deleteNote}
-                />
-                {selectedNoteData && (
-                    <NoteArea note={selectedNoteData} onNoteUpdate={updateNote} />
-                )}
-            </div>
-        </div>
+      <div className="p-10 h-full w-full min-h-3/12 min-w-min flex flex-col">
+          <div>
+              <NotePanel 
+                notes={notes} 
+                selectedNote={selectedNote}
+                changeSelectedNote={changeSelectedNote} 
+                addNote={addNote} 
+                deleteNote={deleteNote}
+              />
+              {selectedNoteData && (
+                  <NoteArea note={selectedNoteData} onNoteUpdate={updateNote} />
+              )}
+          </div>
+      </div>
   );
 }
 

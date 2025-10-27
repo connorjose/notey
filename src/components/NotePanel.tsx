@@ -47,7 +47,7 @@ function NotePanel({
     })
 
     return (
-        <div>
+        <div className="">
             <SearchBox 
                 searchQuery={searchQuery} 
                 onSearch={setSearchQuery} 
