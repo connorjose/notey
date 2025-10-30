@@ -61,8 +61,8 @@ function App() {
   };
 
   return (
-      <div className="p-10 h-full w-full min-h-3/12 min-w-min flex flex-col">
-          <div>
+      <div>
+          <div className="p-10 h-full w-full min-h-3/12 min-w-min flex flex-row">
               <NotePanel 
                 notes={notes} 
                 selectedNote={selectedNote}

@@ -4,7 +4,7 @@ import path from 'node:path'
 import { registerHandlers } from './handlers/NoteIPCHandlers'
 import noteService from './services/NoteService'
 import { INote } from '../src/models/INote'
-import { createMenuTemplate } from './handlers/menuHandler'
+import { createMenuTemplate } from './handlers/MenuHandler'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 process.env.APP_ROOT = path.join(__dirname, '..')

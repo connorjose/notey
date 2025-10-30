@@ -27,6 +27,7 @@ function NoteItem({
                 key={noteIndex}
                 onClick={onNoteClick}
             >
+            <p>{title}</p>
             </a>
         </>
     );
