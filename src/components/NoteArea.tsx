@@ -1,25 +1,13 @@
-import TextArea from './TextArea';
-import { INote } from "../models/INote";
+import { ReactNode } from 'react';
 
 interface NoteAreaProps {
-    note: INote;
-    onNoteUpdate: (updatedNote: INote) => void;
+    children: ReactNode;
 }   
 
-function NoteArea({note, onNoteUpdate}: NoteAreaProps): JSX.Element {
-
-    const handleTitleChange = (newTitle: string) => {
-        onNoteUpdate({...note, title: newTitle})
-    }
-
-    const handleContentChange = (newContent: string) => {
-        onNoteUpdate({...note, content: newContent})
-    }
-
+function NoteArea({children}: NoteAreaProps): JSX.Element {
     return (
         <div className="note-area">
-            <TextArea content={note.title} onContentChange={handleTitleChange}/>
-            <TextArea content={note.content} onContentChange={handleContentChange}/>
+            {children}
         </div>
     );
 }

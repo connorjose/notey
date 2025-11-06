@@ -51,8 +51,8 @@ const NotesContext = createContext<ContextValue | undefined>(undefined);
 export const NotesProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(notesReducer, initState);
 
-  // subscribe to initial data from main process
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handler = (_: any, notes: INote[]) => dispatch({ type: 'SET_NOTES', payload: notes });
     NoteService.onNotes(handler);
     return () => NoteService.offNotes(handler);

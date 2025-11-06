@@ -27,7 +27,6 @@ function TextArea({
             value={text}
             onChange={handleTextChange}
         >
-
         </textarea>
     );
 
