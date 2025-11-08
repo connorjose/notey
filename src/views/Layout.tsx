@@ -8,7 +8,7 @@ interface LayoutProps {
 
 export default function Layout({children}: LayoutProps): JSX.Element {
     return (
-        <SidebarProvider>
+        <SidebarProvider defaultOpen={true}>
             <AppSidebar />
             <main className="">
                 <SidebarTrigger/>

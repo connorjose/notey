@@ -17,7 +17,7 @@ export function AppSidebar()
     const { notes } = useNotes();
     
     return (
-        <Sidebar>
+        <Sidebar variant="sidebar">
             <SidebarContent>
                 <SidebarGroup>
                     <SidebarGroupLabel>Notes</SidebarGroupLabel>

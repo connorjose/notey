@@ -1,12 +1,12 @@
 
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-}
+} */
 
-.app-container {
+/* .app-container {
   display: flex;
   flex-direction: row;
   flex-basis: 0;
@@ -27,7 +27,7 @@
   visibility: visible;
 } */
 
-.add-note-button {
+/* .add-note-button {
   background-color: #4caf50;
   color: white;
   padding: 0.5em 1em;
@@ -39,4 +39,4 @@
 html, body, #root {
   height: 100%;
   margin: 0;
-}
+} */

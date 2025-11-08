@@ -24,11 +24,12 @@ export default function NoteApp()
     }
 
     if (selectedNoteData == undefined) {
-    return (
-        <Layout>
-            <Skeleton />
-        </Layout>
-    )
+        // TODO: Create a modal to popup saying the notes data isn't avaliable? Error recovery?
+        return (
+            <Layout>
+                <Skeleton />
+            </Layout>
+        )
     }
 
     return (
