@@ -27,20 +27,26 @@ export function createMenuTemplate (window: Electron.BrowserWindow) {
                         window.webContents.send('focus-search');
                     }
                 },
+                { type: 'separator' },
                 { role: 'quit' }
             ],
         }
     ];
 
     if (VITE_DEV_SERVER_URL) {
-        const devToolsToggle = isMac ? 'Command+I' : 'Ctrl+I';
+        const devToolsToggle = isMac ? 'Command+Shift+I' : 'Ctrl+Shift+I';
         template.push(
             {
                 label: 'Window',
-                accelerator: devToolsToggle,
-                click: () => {
-                    window.webContents.openDevTools();
-                }
+                submenu: [
+                    {
+                        label: 'Toggle Dev Tools',
+                        accelerator: devToolsToggle,
+                        click: () => {
+                            window.webContents.openDevTools();
+                        }
+                    }
+                ]
             }
         )
     }

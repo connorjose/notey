@@ -6,7 +6,7 @@ interface NoteAreaProps {
 
 function NoteArea({children}: NoteAreaProps): JSX.Element {
     return (
-        <div className="note-area">
+        <div className="p-7 flex flex-col m-auto min-w-max">
             {children}
         </div>
     );

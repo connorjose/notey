@@ -1,4 +1,4 @@
-import { AppSidebar } from "@/components/AppSidebard";
+import { AppSidebar } from "@/components/AppSidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { ReactNode } from "react";
 
@@ -10,7 +10,7 @@ export default function Layout({children}: LayoutProps): JSX.Element {
     return (
         <SidebarProvider defaultOpen={true}>
             <AppSidebar />
-            <main className="">
+            <main className="p-2 w-full">
                 <SidebarTrigger/>
                 {children}
             </main>

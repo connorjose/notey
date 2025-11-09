@@ -27,7 +27,7 @@ export function AppSidebar()
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {notes.map((note) => (
-                                <SidebarMenuItem key={note.title}>
+                                <SidebarMenuItem key={note.id}>
                                     <SidebarMenuButton asChild>
                                         <a href="#">
                                             <span>{note.title}</span>

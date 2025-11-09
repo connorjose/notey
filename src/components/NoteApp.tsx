@@ -2,7 +2,8 @@ import { useNotes } from "@/context/NotesContext";
 import Layout from "@/views/Layout";
 import NoteArea from "./NoteArea";
 import Skeleton from "./Skeleton";
-import TextArea from "./TextArea";
+import TextArea from "./OldTextArea";
+// import { Textarea } from "./ui/textarea";
 
 export default function NoteApp()
 {
