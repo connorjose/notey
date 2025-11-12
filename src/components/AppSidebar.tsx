@@ -14,7 +14,7 @@ import { useNotes } from "@/context/NotesContext";
 export function AppSidebar()
 {
     // const { notes, selectedIndex, editNote } = useNotes();
-    const { notes } = useNotes();
+    const { notes, selectedIndex, setSelectedIndex } = useNotes();
     
     return (
         <Sidebar variant="sidebar">
@@ -26,10 +26,19 @@ export function AppSidebar()
                     </SidebarGroupAction>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {notes.map((note) => (
+                            {notes.map((note, idx) => (
                                 <SidebarMenuItem key={note.id}>
-                                    <SidebarMenuButton asChild>
-                                        <a href="#">
+                                    <SidebarMenuButton 
+                                        asChild 
+                                        isActive={selectedIndex == idx}
+                                    >
+                                        <a 
+                                            href="#"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                setSelectedIndex(idx)
+                                            }}    
+                                        >
                                             <span>{note.title}</span>
                                         </a>
                                     </SidebarMenuButton>
