@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import noteService from '../services/NoteService'
 import { INote } from '../../src/models/INote'
-import { createMenuTemplate } from './MenuHandler'
+import { AppMenuTemplate } from './MenuHandler'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 process.env.APP_ROOT = path.join(__dirname, '..')
@@ -16,7 +16,6 @@ export const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist')
 process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 'public') : RENDERER_DIST
 
 // TODO: Move to class for handling the Window state
-
 export let win: BrowserWindow | null
 
 export function createWindow() {
@@ -37,8 +36,8 @@ export function createWindow() {
   }
 
   win.webContents.once('did-finish-load', () => {
-    loadNotes(win!);
-    createMenuTemplate(win!);
+    LoadNotes(win!);
+    AppMenuTemplate(win!);
   });
 }
 
@@ -46,7 +45,7 @@ export function closeWindow() {
     win = null;
 }
 
-function loadNotes(win: BrowserWindow)  {
+function LoadNotes(win: BrowserWindow)  {
     try {
         let notes: INote[] = noteService.getNotes();
         if (notes.length < 1) {
