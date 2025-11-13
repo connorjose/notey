@@ -1,6 +1,6 @@
 import { Menu } from 'electron';
 import noteService from '../services/NoteService';
-import { VITE_DEV_SERVER_URL }from '../main'
+import { VITE_DEV_SERVER_URL }from './Window'
 
 export function createMenuTemplate (window: Electron.BrowserWindow) {
 

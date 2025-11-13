@@ -2,26 +2,21 @@ import { useNotes } from "@/context/NotesContext";
 import Layout from "@/views/Layout";
 import NoteArea from "./NoteArea";
 import Skeleton from "./Skeleton";
-import TextArea from "./OldTextArea";
-// import { Textarea } from "./ui/textarea";
+import { Textarea } from "./ui/textarea";
+import React from "react";
 
 export default function NoteApp()
 {
     const { notes, selectedIndex, editNote } = useNotes();
-    let selectedNoteData = Array.isArray(notes) ? notes[selectedIndex] : undefined;
+    const selectedNoteData = Array.isArray(notes) ? notes[selectedIndex] : undefined;
+    const placeholderText = "Write something!"
 
-    const handleTitleChange = (update: string) => {
-        if (selectedNoteData) {
-            selectedNoteData = { ...selectedNoteData, title: update }
-            editNote(selectedIndex, selectedNoteData)
-        }   
-    }
-
-    const handleContentChange = (update: string) => {
-        if (selectedNoteData) {
-            selectedNoteData = { ...selectedNoteData, content: update }
-            editNote(selectedIndex, selectedNoteData)
-        }   
+    const handleFieldChange = (field: "title" | "content") => 
+        (value: React.ChangeEvent<HTMLTextAreaElement>) => {
+            if (!selectedNoteData) return;
+            const newVal = value.target.value;
+            const updatedNote = { ...selectedNoteData, [field]: newVal };
+            editNote(selectedIndex, updatedNote);
     }
 
     if (selectedNoteData == undefined) {
@@ -36,8 +31,16 @@ export default function NoteApp()
     return (
         <Layout>
             <NoteArea>
-                <TextArea content={selectedNoteData.title} onContentChange={handleTitleChange}/>
-                <TextArea content={selectedNoteData.content} onContentChange={handleContentChange}/>
+                <Textarea
+                    placeholder={placeholderText}
+                    value={selectedNoteData.title} 
+                    onChange={handleFieldChange("title")}    
+                />
+                <Textarea
+                    placeholder={placeholderText}
+                    value={selectedNoteData.content} 
+                    onChange={handleFieldChange("content")}
+                />
             </NoteArea>
         </Layout>
     )
