@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserViewConstructorOptions, BrowserWindow } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import noteService from '../services/NoteService'
@@ -62,4 +62,37 @@ function LoadNotes(win: BrowserWindow)  {
         // TODO: Add retry method?
         throw new Error("Unable to load notes");
     }
+}
+
+class Window {
+  private win: BrowserWindow | null = null;
+  readonly id: number
+
+  constructor(id: number, private opts: BrowserViewConstructorOptions = {}) {
+    this.id = id
+    this.opts = opts
+  }
+
+  create() {
+    this.win = new BrowserWindow({
+      width: 1300,
+      height: 1000,
+      show: false,
+      icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
+      webPreferences: {
+        preload: path.join(__dirname, 'preload.mjs'),
+        ...this.opts.webPreferences
+      },
+      ...this.opts
+    })
+
+
+
+    return this.win
+  }
+
+  private load() {
+
+  }
+
 }

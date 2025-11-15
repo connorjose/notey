@@ -38,7 +38,7 @@ export default function NoteApp()
                 />
                 <Textarea
                     placeholder={placeholderText}
-                    value={selectedNoteData.content} 
+                    value={selectedNoteData.content}
                     onChange={handleFieldChange("content")}
                 />
             </NoteArea>
