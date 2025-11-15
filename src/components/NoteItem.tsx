@@ -1,7 +1,5 @@
-import { IconFileX } from "@tabler/icons-react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { INote } from "../models/INote";
-import { ActionIcon, NavLink } from "@mantine/core";
-
 interface NoteItemProps {
     note: INote,
     onNoteClick: () => void,
@@ -23,24 +21,14 @@ function NoteItem({
 
     return (
         <>
-            <NavLink
+            <a
                 className="note-item"
                 href="#"
                 key={noteIndex}
-                label={title}
-                active={selected}
-                description={summary}
-                noWrap={true}
                 onClick={onNoteClick}
-                rightSection={
-                    <ActionIcon 
-                        className="delete-button" 
-                        color="red" 
-                        onClick={(e) => { e.stopPropagation(); onDeleteClick(note.id); }}>
-                        <IconFileX />
-                    </ActionIcon>
-                }
-            />
+            >
+            <p>{title}</p>
+            </a>
         </>
     );
 }
