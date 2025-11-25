@@ -23,14 +23,14 @@ function notesReducer(state: State, action: Action): State {
     case 'SET_NOTES':
       return { ...state, notes: action.payload, filteredNotes: action.payload };
     case 'ADD_NOTES':
-      return { ...state, notes: action.payload, selectedIndex: action.payload.length - 1 };
+      return { ...state, notes: action.payload, filteredNotes: action.payload, selectedIndex: action.payload.length - 1 };
     case 'EDIT_NOTE': {
       const newNotes = [...state.notes];
       newNotes[action.payload.index] = action.payload.note;
       return { ...state, notes: newNotes, filteredNotes: newNotes };
     }
     case 'DELETE_NOTES':
-      return { ...state, notes: action.payload, selectedIndex: Math.max(action.payload.length - 1, 0) };
+      return { ...state, notes: action.payload, filteredNotes: action.payload, selectedIndex: Math.max(action.payload.length - 1, 0) };
     case 'SET_SELECTED_INDEX':
       return { ...state, selectedIndex: action.payload };
     case 'SET_FILTERED_NOTES':

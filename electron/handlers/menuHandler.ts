@@ -28,22 +28,3 @@ export function AppMenuTemplate (window: Electron.BrowserWindow) {
     Menu.setApplicationMenu(menu);
     return menu;
 }
-
-export function sideBarContextMenu (window: Electron.BrowserWindow, noteId: number) {
-    const template: Electron.MenuItemConstructorOptions[] = [
-        { 
-            label: 'Delete Note',
-            click: async () => {
-                try {
-                    await noteService.removeNote(noteId);
-                    window.webContents.send('note-data', noteService.getNotes());
-                } catch (error) {
-                    console.error('Error deleting note:', error);
-                }   
-            }
-        }
-    ]
-
-    const menu = Menu.buildFromTemplate(template);
-    menu.popup({ window });
-}

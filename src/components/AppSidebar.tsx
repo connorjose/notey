@@ -11,6 +11,7 @@ import { Sidebar,
         SidebarMenuItem} from "./ui/sidebar";
 import { useNotes } from "@/context/NotesContext";
 import SearchBox from "./SearchBox";
+import { SideBarContextMenu } from "./SideBarContextMenu";
 
 
 export function AppSidebar()
@@ -39,24 +40,22 @@ export function AppSidebar()
                         <SidebarMenu>
                             {filteredNotes?.map((note, idx) => (
                                 <SidebarMenuItem key={note.id}>
-                                    <SidebarMenuButton 
-                                        asChild 
-                                        isActive={selectedIndex == idx}
-                                    >
-                                        <a 
-                                            href="#"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                setSelectedIndex(idx)
-                                            }}
-                                            onContextMenu={(e) => {
-                                                e.preventDefault();
-                                                window.bridge.invoke('show-note-context-menu', note.id);
-                                            }}
+                                    <SideBarContextMenu note={note}>
+                                        <SidebarMenuButton 
+                                            asChild 
+                                            isActive={selectedIndex == idx}
                                         >
-                                            <span>{note.title}</span>
-                                        </a>
-                                    </SidebarMenuButton>
+                                            <a 
+                                                href="#"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    setSelectedIndex(idx)
+                                                }}
+                                            >
+                                                <span>{note.title}</span>
+                                            </a>
+                                        </SidebarMenuButton>
+                                    </SideBarContextMenu>
                                 </SidebarMenuItem>
                             ))}
                         </SidebarMenu>
