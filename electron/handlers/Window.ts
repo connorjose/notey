@@ -28,6 +28,8 @@ export function createWindow() {
       devTools: process.env.NODE_ENV !== 'production' || !app.isPackaged
     },
   })
+  
+  AppMenuTemplate(win!);
 
   if (VITE_DEV_SERVER_URL) {
     win.loadURL(VITE_DEV_SERVER_URL)
@@ -35,9 +37,8 @@ export function createWindow() {
     win.loadFile(path.join(RENDERER_DIST, 'index.html'));
   }
 
-  win.webContents.once('did-finish-load', () => {
+  win.once('ready-to-show', () => {
     LoadNotes(win!);
-    AppMenuTemplate(win!);
   });
 }
 

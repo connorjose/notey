@@ -1,4 +1,4 @@
-import { Menu } from 'electron';
+import {  Menu } from 'electron';
 import noteService from '../services/NoteService';
 
 export function AppMenuTemplate (window: Electron.BrowserWindow) {
@@ -27,8 +27,4 @@ export function AppMenuTemplate (window: Electron.BrowserWindow) {
     const menu = Menu.buildFromTemplate(template);
     Menu.setApplicationMenu(menu);
     return menu;
-}
-
-export function ContextMenuTemplate (window: Electron.BrowserWindow) {
-
 }

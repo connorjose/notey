@@ -1,9 +1,10 @@
-import React, { createContext, useReducer, useEffect, ReactNode, useContext } from "react";
+import { createContext, useReducer, useEffect, ReactNode, useContext } from "react";
 import { INote } from "@/models/INote";
 import NoteService from "@/services/NoteService";
 
 type State = {
     notes: INote[];
+    filteredNotes: INote[];
     selectedIndex: number
 }
 
@@ -12,25 +13,28 @@ type Action =
   | { type: 'ADD_NOTES'; payload: INote[] }
   | { type: 'EDIT_NOTE'; payload: { index: number; note: INote } }
   | { type: 'DELETE_NOTES'; payload: INote[] }
+  | { type: 'SET_FILTERED_NOTES'; payload: INote[] }
   | { type: 'SET_SELECTED_INDEX'; payload: number };
 
-const initState: State = { notes: [], selectedIndex: 0 }
+const initState: State = { notes: [], filteredNotes: [], selectedIndex: 0 }
 
 function notesReducer(state: State, action: Action): State {
   switch (action.type) {
     case 'SET_NOTES':
-      return { ...state, notes: action.payload };
+      return { ...state, notes: action.payload, filteredNotes: action.payload };
     case 'ADD_NOTES':
-      return { ...state, notes: action.payload, selectedIndex: action.payload.length - 1 };
+      return { ...state, notes: action.payload, filteredNotes: action.payload, selectedIndex: action.payload.length - 1 };
     case 'EDIT_NOTE': {
       const newNotes = [...state.notes];
       newNotes[action.payload.index] = action.payload.note;
-      return { ...state, notes: newNotes };
+      return { ...state, notes: newNotes, filteredNotes: newNotes };
     }
     case 'DELETE_NOTES':
-      return { ...state, notes: action.payload, selectedIndex: Math.max(action.payload.length - 1, 0) };
+      return { ...state, notes: action.payload, filteredNotes: action.payload, selectedIndex: Math.max(action.payload.length - 1, 0) };
     case 'SET_SELECTED_INDEX':
       return { ...state, selectedIndex: action.payload };
+    case 'SET_FILTERED_NOTES':
+      return { ...state, filteredNotes: action.payload }; 
     default:
       return state;
   }
@@ -38,12 +42,14 @@ function notesReducer(state: State, action: Action): State {
 
 type ContextValue = {
   notes: INote[];
+  filteredNotes?: INote[];
   selectedIndex: number;
   setNotes: (notes: INote[]) => void;
   addNote: () => Promise<INote[]>;
   editNote: (index: number, note: INote) => Promise<void>;
   deleteNote: (id: number) => Promise<INote[]>;
   setSelectedIndex: (i: number) => void;
+  setFilteredNotes: (filteredNotes: INote[]) => void;
 };
 
 const NotesContext = createContext<ContextValue | undefined>(undefined);
@@ -59,6 +65,7 @@ export const NotesProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const setNotes = (notes: INote[]) => dispatch({ type: 'SET_NOTES', payload: notes });
+  const setFilteredNotes = (filteredNotes: INote[]) => dispatch({ type: 'SET_FILTERED_NOTES', payload: filteredNotes });
 
   const addNote = async () => {
     const notes = await NoteService.addNote({ title: 'Untitled', content: '' });
@@ -83,12 +90,14 @@ export const NotesProvider = ({ children }: { children: ReactNode }) => {
     <NotesContext.Provider
       value={{
         notes: state.notes,
+        filteredNotes: state.filteredNotes,
         selectedIndex: state.selectedIndex,
         setNotes,
         addNote,
         editNote,
         deleteNote,
-        setSelectedIndex
+        setSelectedIndex,
+        setFilteredNotes
       }}
     >
       {children}
