@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import noteService from '../services/NoteService'
 import { INote } from '../../src/models/INote'
-import { AppMenuTemplate } from './MenuHandler'
+import { AppMenuTemplate, ContextMenuTemplate } from './MenuHandler'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 process.env.APP_ROOT = path.join(__dirname, '..')
@@ -29,15 +29,17 @@ export function createWindow() {
     },
   })
 
+  AppMenuTemplate(win!);
+  ContextMenuTemplate(win!);
+
   if (VITE_DEV_SERVER_URL) {
     win.loadURL(VITE_DEV_SERVER_URL)
   } else {
     win.loadFile(path.join(RENDERER_DIST, 'index.html'));
   }
 
-  win.webContents.once('did-finish-load', () => {
+  win.once('ready-to-show', () => {
     LoadNotes(win!);
-    AppMenuTemplate(win!);
   });
 }
 

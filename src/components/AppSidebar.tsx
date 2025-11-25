@@ -5,19 +5,24 @@ import { Sidebar,
         SidebarGroupAction, 
         SidebarGroupContent, 
         SidebarGroupLabel, 
+        SidebarHeader, 
         SidebarMenu,
         SidebarMenuButton,
         SidebarMenuItem} from "./ui/sidebar";
 import { useNotes } from "@/context/NotesContext";
+import SearchBox from "./SearchBox";
 
 
 export function AppSidebar()
 {
-    // const { notes, selectedIndex, editNote } = useNotes();
-    const { notes, selectedIndex, setSelectedIndex, addNote } = useNotes();
+    const { filteredNotes, selectedIndex, setSelectedIndex, addNote } = useNotes();
     
     return (
         <Sidebar variant="sidebar">
+            <SidebarHeader>
+                <h1 className="text-lg font-medium">Notey</h1>
+                <SearchBox />
+            </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>
                     <SidebarGroupLabel>Notes</SidebarGroupLabel>
@@ -32,7 +37,7 @@ export function AppSidebar()
                     </SidebarGroupAction>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {notes.map((note, idx) => (
+                            {filteredNotes?.map((note, idx) => (
                                 <SidebarMenuItem key={note.id}>
                                     <SidebarMenuButton 
                                         asChild 

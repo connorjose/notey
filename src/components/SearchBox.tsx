@@ -1,40 +1,39 @@
+import { SidebarContent, SidebarGroup, SidebarInput } from "./ui/sidebar";
+import { useNotes } from "@/context/NotesContext";
 
-interface SearchBoxProps {
-    searchQuery: string,
-    onSearch: (searchQuery: string) => void
-    addNote: () => void,
-    toggleSearchBoxFocus: React.RefObject<HTMLInputElement>
-}
+// interface SearchBoxProps {
+// }
 
-function SearchBox({
-    searchQuery, 
-    onSearch,
-    addNote,
-    toggleSearchBoxFocus
-}: SearchBoxProps): JSX.Element {
+function SearchBox(): JSX.Element {
+
+    const { notes, setFilteredNotes } = useNotes();
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        onSearch(e.target.value)
+        const filteredNotes = notes.filter(note => 
+            note.title.toLowerCase().includes(e.target.value.toLowerCase()) || 
+            note.content.toLowerCase().includes(e.target.value.toLowerCase())
+        );
+        setFilteredNotes(filteredNotes);
     }
-
+    
     const platform = window.bridge.platform;
     const isMac = platform === 'darwin';
     const searchAccelerator = isMac ? '⌘+F' : 'Ctrl+F';
 
     return (
-        <div>
-            <input 
-                placeholder={`Search notes ${searchAccelerator}`}
-                value={searchQuery}
-                onChange={handleSearchChange}
-                ref={toggleSearchBoxFocus}
-            />
-            <button onClick={addNote}>Add note</button>
-        </div>
+        <form>
+            <SidebarGroup>
+                <SidebarContent>
+                    <SidebarInput
+                        id="search"
+                        placeholder={`Search notes (${searchAccelerator})`}
+                        onChange={handleSearchChange}
+                        // ref={toggleSearchBoxFocus}
+                    />
+                </SidebarContent>
+            </SidebarGroup>
+        </form>
     );
 }
 
-// <ActionIcon size="input-sm" variant="gradient" aria-label="Settings" onClick={addNote} className="add-note-button">
-//     <IconSquarePlus size={85} />
-// </ActionIcon>
 export default SearchBox;
