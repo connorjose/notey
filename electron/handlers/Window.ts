@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import noteService from '../services/NoteService'
 import { INote } from '../../src/models/INote'
-import { AppMenuTemplate, ContextMenuTemplate } from './MenuHandler'
+import { AppMenuTemplate } from './MenuHandler'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 process.env.APP_ROOT = path.join(__dirname, '..')
@@ -28,9 +28,8 @@ export function createWindow() {
       devTools: process.env.NODE_ENV !== 'production' || !app.isPackaged
     },
   })
-
+  
   AppMenuTemplate(win!);
-  ContextMenuTemplate(win!);
 
   if (VITE_DEV_SERVER_URL) {
     win.loadURL(VITE_DEV_SERVER_URL)

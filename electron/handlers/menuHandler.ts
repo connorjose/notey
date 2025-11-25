@@ -1,4 +1,4 @@
-import { ContextMenuParams, Event, Menu } from 'electron';
+import {  Menu } from 'electron';
 import noteService from '../services/NoteService';
 
 export function AppMenuTemplate (window: Electron.BrowserWindow) {
@@ -29,22 +29,21 @@ export function AppMenuTemplate (window: Electron.BrowserWindow) {
     return menu;
 }
 
-export function ContextMenuTemplate (window: Electron.BrowserWindow) {
+export function sideBarContextMenu (window: Electron.BrowserWindow, noteId: number) {
     const template: Electron.MenuItemConstructorOptions[] = [
         { 
-            role: 'delete',
-            click: () => {
-                window.webContents.send('context-menu-delete');
+            label: 'Delete Note',
+            click: async () => {
+                try {
+                    await noteService.removeNote(noteId);
+                    window.webContents.send('note-data', noteService.getNotes());
+                } catch (error) {
+                    console.error('Error deleting note:', error);
+                }   
             }
         }
     ]
 
     const menu = Menu.buildFromTemplate(template);
-    window.webContents.on('context-menu', (event: Event, params: ContextMenuParams) => {
-        console.log('event', event);
-        console.log('params', params);
-        if (params.linkURL) {
-            menu.popup();
-        }
-    });
+    menu.popup({ window });
 }

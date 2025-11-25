@@ -48,7 +48,11 @@ export function AppSidebar()
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 setSelectedIndex(idx)
-                                            }}    
+                                            }}
+                                            onContextMenu={(e) => {
+                                                e.preventDefault();
+                                                window.bridge.invoke('show-note-context-menu', note.id);
+                                            }}
                                         >
                                             <span>{note.title}</span>
                                         </a>
