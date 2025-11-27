@@ -20,7 +20,7 @@ export let win: BrowserWindow | null
 
 export function createWindow() {
   win = new BrowserWindow({
-    width: 1300,
+  width: 1300,
     height: 1000,
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
     webPreferences: {
@@ -37,7 +37,7 @@ export function createWindow() {
     win.loadFile(path.join(RENDERER_DIST, 'index.html'));
   }
 
-  win.once('ready-to-show', () => {
+  win.on('ready-to-show', () => {
     LoadNotes(win!);
   });
 }
@@ -67,10 +67,8 @@ function LoadNotes(win: BrowserWindow)  {
 
 class Window {
   private win: BrowserWindow | null = null;
-  readonly id: number
 
-  constructor(id: number, private opts: BrowserViewConstructorOptions = {}) {
-    this.id = id
+  constructor(private opts: BrowserViewConstructorOptions = {}) {
     this.opts = opts
   }
 
