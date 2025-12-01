@@ -22,7 +22,9 @@ export function SideBarContextMenu({ note, children }: SideBarContextMenuProps):
             <ContextMenuContent>
                 <ContextMenuItem
                     onSelect={() => deleteNote(note.id)}
+                    className="text-red-600"
                 >
+                    
                     Delete
                 </ContextMenuItem>
             </ContextMenuContent>

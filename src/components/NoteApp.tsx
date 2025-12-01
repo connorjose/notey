@@ -34,12 +34,20 @@ export default function NoteApp()
                 <Textarea
                     placeholder={placeholderText}
                     value={selectedNoteData.title} 
-                    onChange={handleFieldChange("title")}    
+                    onChange={handleFieldChange("title")}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                        }  
+                    }}
+                    className="outline-none! resize-none! min-h-0! h-auto border-0 overflow-hidden text-2xl! mb-4 focus:ring-0 focus-visible:ring-0"
+                    rows={1} 
                 />
                 <Textarea
                     placeholder={placeholderText}
                     value={selectedNoteData.content}
                     onChange={handleFieldChange("content")}
+                    className="outline-none! resize-none! h-full border-0 focus:ring-0 focus-visible:ring-0"
                 />
             </NoteArea>
         </Layout>
