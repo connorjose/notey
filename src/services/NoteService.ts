@@ -11,6 +11,10 @@ const offNotes = (handler: NotesHandler) => {
     window.bridge.off('note-data', handler);
 }
 
+const getNotes = async (): Promise<INote[]> => {
+    return (await window.bridge.invoke('get-notes')) as INote[];
+}
+
 const addNote = async (payload: {title: string, content: string}): Promise<INote[]> => {
     return (await window.bridge.invoke('add-note', payload)) as INote[];
 }
@@ -23,4 +27,4 @@ const deleteNote = async (id: number): Promise<INote[]> => {
   return (await window.bridge.invoke('delete-note', id)) as INote[];
 };
 
-export default { onNotes, offNotes, addNote, editNote, deleteNote };
+export default { onNotes, offNotes, getNotes, addNote, editNote, deleteNote };

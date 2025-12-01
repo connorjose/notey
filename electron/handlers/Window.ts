@@ -1,8 +1,7 @@
-import { app, BrowserViewConstructorOptions, BrowserWindow } from 'electron'
+import { app, BrowserWindow, BrowserWindowConstructorOptions } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import noteService from '../services/NoteService'
-import { INote } from '../../src/models/INote'
 import { AppMenuTemplate } from './MenuHandler'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -12,88 +11,93 @@ process.env.APP_ROOT = path.join(__dirname, '..')
 export const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL']
 export const MAIN_DIST = path.join(process.env.APP_ROOT, 'dist-electron')
 export const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist')
-
 process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 'public') : RENDERER_DIST
 
-// TODO: Move to class for handling the Window state
-export let win: BrowserWindow | null
-
-export function createWindow() {
-  win = new BrowserWindow({
-    width: 1300,
-    height: 1000,
-    icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.mjs'),
-      devTools: process.env.NODE_ENV !== 'production' || !app.isPackaged
-    },
-  })
-  
-  AppMenuTemplate(win!);
-
-  if (VITE_DEV_SERVER_URL) {
-    win.loadURL(VITE_DEV_SERVER_URL)
-  } else {
-    win.loadFile(path.join(RENDERER_DIST, 'index.html'));
+const DefaultWindowOptions: BrowserWindowConstructorOptions = {
+  width: 1300,
+  height: 1000,
+  show: false,
+  icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
+  webPreferences: {
+    preload: path.join(__dirname, 'preload.mjs'),
+    devTools: process.env.NODE_ENV !== 'production' || !app.isPackaged
   }
+};
 
-  win.once('ready-to-show', () => {
-    LoadNotes(win!);
-  });
-}
+export class WindowManager {
+  private instances = new Map<number, BrowserWindow>();
 
-export function closeWindow() {
-    win = null;
-}
-
-function LoadNotes(win: BrowserWindow)  {
-    try {
-        let notes: INote[] = noteService.getNotes();
-        if (notes.length < 1) {
-            const introNote: INote = {
-                id: 1,
-                title: "Welcome to note app",
-                content: "This is a sample note. You can edit this note or add a new one."
-            }
-            noteService.addNote(introNote)
-            notes = noteService.getNotes();
-        }
-        win.webContents.send('note-data', notes);
-    } catch (error) {
-        // TODO: Add retry method?
-        throw new Error("Unable to load notes");
-    }
-}
-
-class Window {
-  private win: BrowserWindow | null = null;
-  readonly id: number
-
-  constructor(id: number, private opts: BrowserViewConstructorOptions = {}) {
-    this.id = id
-    this.opts = opts
-  }
-
-  create() {
-    this.win = new BrowserWindow({
-      width: 1300,
-      height: 1000,
-      show: false,
-      icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
+  createWindow(opts: BrowserWindowConstructorOptions = {}) {
+    const merged = {
+      ...DefaultWindowOptions,
+      ...opts,
       webPreferences: {
-        preload: path.join(__dirname, 'preload.mjs'),
-        ...this.opts.webPreferences
-      },
-      ...this.opts
-    })
+        ...(DefaultWindowOptions.webPreferences || {}),
+        ...(opts.webPreferences || {}),
+        preload: (opts.webPreferences && opts.webPreferences.preload) ?? DefaultWindowOptions.webPreferences?.preload
+      }
+    };
 
+    const win = new BrowserWindow(merged);
 
+    if (VITE_DEV_SERVER_URL) {
+      win.loadURL(VITE_DEV_SERVER_URL);
+      if (merged.webPreferences?.devTools ?? process.env.NODE_ENV !== 'production') {
+        win.webContents.openDevTools({ mode: 'right' });
+      }
+    } else {
+      win.loadFile(path.join(RENDERER_DIST, 'index.html'));
+    }
 
-    return this.win
+    win.webContents.on('did-finish-load', () => {
+      try {
+        const notes = noteService.getNotes();
+        win.webContents.send('note-data', notes);
+      } catch (err) {
+        console.error('Failed to send notes to renderer', err);
+      }
+    });
+
+    win.once('ready-to-show', () => {
+      if (!merged.show) win.show();
+    });
+
+    win.on('closed', () => {
+      this.instances.delete(win.id);
+    });
+
+    this.instances.set(win.id, win);
+
+    // attach app menu (if any)
+    try { AppMenuTemplate(win); } catch (e) { console.error('Failed to set app menu', e); }
+
+    return win;
   }
 
-  private load() {
-
+  getWindow(id: number) {
+    return this.instances.get(id) ?? null;
   }
 
+  getAll() {
+    return Array.from(this.instances.values());
+  }
+
+  closeWindow(id: number) {
+    const w = this.instances.get(id);
+    if (w && !w.isDestroyed()) w.close();
+    this.instances.delete(id);
+  }
+
+  closeAll() {
+    for (const w of this.instances.values()) {
+      if (!w.isDestroyed()) w.close();
+    }
+    this.instances.clear();
+  }
+
+  broadcast(channel: string, ...args: any[]) {
+    for (const w of this.instances.values()) w.webContents.send(channel, ...args);
+  }
 }
+
+export const windowManager = new WindowManager();

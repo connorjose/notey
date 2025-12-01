@@ -45,6 +45,7 @@ type ContextValue = {
   filteredNotes?: INote[];
   selectedIndex: number;
   setNotes: (notes: INote[]) => void;
+  getNotes: () => Promise<INote[]>;
   addNote: () => Promise<INote[]>;
   editNote: (index: number, note: INote) => Promise<void>;
   deleteNote: (id: number) => Promise<INote[]>;
@@ -61,11 +62,23 @@ export const NotesProvider = ({ children }: { children: ReactNode }) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handler = (_: any, notes: INote[]) => dispatch({ type: 'SET_NOTES', payload: notes });
     NoteService.onNotes(handler);
+    
+    (async () => {
+      const notes = await NoteService.getNotes();
+      if (Array.isArray(notes)) dispatch({ type: 'SET_NOTES', payload: notes });
+    })();
+
     return () => NoteService.offNotes(handler);
   }, []);
 
   const setNotes = (notes: INote[]) => dispatch({ type: 'SET_NOTES', payload: notes });
   const setFilteredNotes = (filteredNotes: INote[]) => dispatch({ type: 'SET_FILTERED_NOTES', payload: filteredNotes });
+
+  const getNotes = async() => {
+    const notes = await NoteService.getNotes();
+    if (Array.isArray(notes)) dispatch({ type: 'SET_NOTES', payload: notes });
+    return notes;
+  }
 
   const addNote = async () => {
     const notes = await NoteService.addNote({ title: 'Untitled', content: '' });
@@ -93,6 +106,7 @@ export const NotesProvider = ({ children }: { children: ReactNode }) => {
         filteredNotes: state.filteredNotes,
         selectedIndex: state.selectedIndex,
         setNotes,
+        getNotes,
         addNote,
         editNote,
         deleteNote,
