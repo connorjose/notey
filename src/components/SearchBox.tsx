@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { SidebarContent, SidebarGroup, SidebarInput } from "./ui/sidebar";
+import { SidebarGroup, SidebarInput, SidebarGroupContent } from "./ui/sidebar";
 import { useNotes } from "@/context/NotesContext";
 
 // interface SearchBoxProps {
@@ -37,15 +37,15 @@ function SearchBox(): JSX.Element {
     return (
         <form>
             <SidebarGroup>
-                <SidebarContent>
+                <SidebarGroupContent>
                     <SidebarInput
-                        ref={searchInputRef}
+                        inputRef={searchInputRef}
                         id="search"
                         placeholder={`Search notes (${searchAccelerator})`}
                         onChange={handleSearchChange}
                         className="border-0 focus:ring-0 focus-visible:ring-0 outline-none"
                     />
-                </SidebarContent>
+                </SidebarGroupContent>
             </SidebarGroup>
         </form>
     );

@@ -2,7 +2,7 @@ import { app, BrowserWindow, BrowserWindowConstructorOptions } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import noteService from '../services/NoteService'
-import { AppMenuTemplate } from './MenuHandler'
+import { AppMenuTemplate } from './menuHandler'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 process.env.APP_ROOT = path.join(__dirname, '..')

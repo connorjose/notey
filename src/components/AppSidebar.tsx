@@ -40,7 +40,10 @@ export function AppSidebar()
                         <SidebarMenu>
                             {filteredNotes?.map((note, idx) => (
                                 <SidebarMenuItem key={note.id}>
-                                    <SideBarContextMenu note={note}>
+                                    <SideBarContextMenu 
+                                        note={note} 
+                                        idx={idx}
+                                    >
                                         <SidebarMenuButton 
                                             asChild 
                                             isActive={selectedIndex == idx}
