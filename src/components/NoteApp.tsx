@@ -47,7 +47,7 @@ export default function NoteApp()
                     placeholder={placeholderText}
                     value={selectedNoteData.content}
                     onChange={handleFieldChange("content")}
-                    className="outline-none! resize-none! h-full border-0 focus:ring-0 focus-visible:ring-0"
+                    className="outline-none! resize-none! h-9/10 border-0 focus:ring-0 focus-visible:ring-0"
                 />
             </NoteArea>
         </Layout>

@@ -10,7 +10,7 @@ export default function Layout({children}: LayoutProps): JSX.Element {
     return (
         <SidebarProvider defaultOpen={true}>
             <AppSidebar />
-            <main className="p-2 w-full">
+            <main className="p-2 w-screen h-screen overflow-hidden">
                 <SidebarTrigger/>
                 {children}
             </main>
