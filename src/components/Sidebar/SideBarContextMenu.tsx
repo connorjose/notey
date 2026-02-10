@@ -3,7 +3,7 @@ import { INote } from "@/models/INote";
 import { ContextMenu,
         ContextMenuContent, 
         ContextMenuItem,  
-        ContextMenuTrigger } from "./ui/context-menu";
+        ContextMenuTrigger } from "../ui/context-menu";
 import { useNotes } from "@/context/NotesContext";
 
 interface SideBarContextMenuProps {

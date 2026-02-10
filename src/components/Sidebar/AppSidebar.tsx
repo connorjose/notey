@@ -8,7 +8,7 @@ import { Sidebar,
         SidebarHeader, 
         SidebarMenu,
         SidebarMenuButton,
-        SidebarMenuItem} from "./ui/sidebar";
+        SidebarMenuItem} from "../ui/sidebar";
 import { useNotes } from "@/context/NotesContext";
 import SearchBox from "./SearchBox";
 import { SideBarContextMenu } from "./SideBarContextMenu";

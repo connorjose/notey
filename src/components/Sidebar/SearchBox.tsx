@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { SidebarGroup, SidebarInput, SidebarGroupContent } from "./ui/sidebar";
+import { SidebarGroup, SidebarInput, SidebarGroupContent } from "../ui/sidebar";
 import { useNotes } from "@/context/NotesContext";
 
 // interface SearchBoxProps {
