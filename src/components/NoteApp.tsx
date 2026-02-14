@@ -4,6 +4,7 @@ import NoteArea from "./NoteArea";
 import Skeleton from "./Skeleton";
 import { Textarea } from "./ui/textarea";
 import React from "react";
+import { ContentContextMenu } from "./ContentContextMenu";
 
 export default function NoteApp()
 {
@@ -31,24 +32,26 @@ export default function NoteApp()
     return (
         <Layout>
             <NoteArea>
-                <Textarea
-                    placeholder={placeholderText}
-                    value={selectedNoteData.title} 
-                    onChange={handleFieldChange("title")}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                            e.preventDefault();
-                        }  
-                    }}
-                    className="outline-none! resize-none! min-h-0! h-auto border-0 overflow-hidden text-2xl! mb-4 focus:ring-0 focus-visible:ring-0"
-                    rows={1} 
-                />
-                <Textarea
-                    placeholder={placeholderText}
-                    value={selectedNoteData.content}
-                    onChange={handleFieldChange("content")}
-                    className="outline-none! resize-none! h-9/10 border-0 focus:ring-0 focus-visible:ring-0"
-                />
+                <ContentContextMenu>
+                    <Textarea
+                        placeholder={placeholderText}
+                        value={selectedNoteData.title} 
+                        onChange={handleFieldChange("title")}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                            }  
+                        }}
+                        className="outline-none! resize-none! min-h-0! h-auto border-0 overflow-hidden text-2xl! mb-4 focus:ring-0 focus-visible:ring-0"
+                        rows={1} 
+                    />
+                    <Textarea
+                        placeholder={placeholderText}
+                        value={selectedNoteData.content}
+                        onChange={handleFieldChange("content")}
+                        className="outline-none! resize-none! h-9/10 border-0 focus:ring-0 focus-visible:ring-0"
+                    />
+                </ContentContextMenu>
             </NoteArea>
         </Layout>
     )

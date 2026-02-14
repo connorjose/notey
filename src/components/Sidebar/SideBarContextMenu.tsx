@@ -30,7 +30,6 @@ export function SideBarContextMenu({ note, idx, children }: SideBarContextMenuPr
                     onSelect={() => deleteNote(note.id)}
                     className="text-red-600"
                 >
-                    
                     Delete
                 </ContextMenuItem>
             </ContextMenuContent>
